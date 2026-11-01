@@ -27,7 +27,7 @@ function ProductCard({ name, logo, save }: Product) {
   return (
     // Outer element belongs to the scroll animation (GSAP writes its transform); hover styles live on the article.
     <div data-anim-item>
-      <article className="group flex h-[300px] flex-col justify-between rounded-[20px] bg-card p-7 text-black transition-[background-color,color,transform,box-shadow] duration-500 ease-out hover:-translate-y-2 hover:bg-forest hover:text-white hover:shadow-[0_24px_50px_rgba(18,29,18,0.25)] focus-within:-translate-y-2 focus-within:bg-forest focus-within:text-white sm:h-[420px] sm:p-8 xl:h-[468px] xl:p-[50px]">
+      <article className="group flex h-[340px] flex-col justify-between rounded-[20px] bg-card p-7 text-black transition-[background-color,color,transform,box-shadow] duration-500 ease-out hover:-translate-y-2 hover:bg-forest hover:text-white hover:shadow-[0_24px_50px_rgba(18,29,18,0.25)] focus-within:-translate-y-2 focus-within:bg-forest focus-within:text-white sm:h-[420px] sm:p-8 xl:h-[468px] xl:p-[50px]">
         <div className="flex items-center gap-5 sm:gap-[29px]">
           <span className="flex size-[64px] shrink-0 items-center justify-center rounded-[15px] bg-white transition-transform duration-500 group-hover:rotate-[-8deg] sm:size-[76px] sm:rounded-[17.025px]">
             <span className="flex scale-[0.85] items-center justify-center sm:scale-100">{logo}</span>
@@ -49,18 +49,32 @@ function ProductCard({ name, logo, save }: Product) {
               Save {save}
             </span>
           </div>
-          <a
-            href="#buy"
-            className="btn-roll flex items-center gap-[12.796px] rounded-full bg-black px-[39.242px] py-[17.062px] text-[17.06px] leading-[1.35] font-bold tracking-[0.5909px] text-white !duration-500 group-hover:bg-white group-hover:text-forest group-focus-within:bg-white group-focus-within:text-forest"
-          >
-            <RollText>Buy now</RollText>
-            <RollIcon size={20.4739}>
-              <span className="relative block size-[20.4739px]">
-                <img src="/assets/products/cart.svg" alt="" width={20.4739} height={20.4739} className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 group-focus-within:opacity-0" />
-                <img src="/assets/products/cart-dark.svg" alt="" width={20.4739} height={20.4739} className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100" />
-              </span>
-            </RollIcon>
-          </a>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 sm:gap-x-7">
+            <a
+              href="#buy"
+              className="btn-roll flex items-center gap-[12.796px] rounded-full bg-black px-[39.242px] py-[17.062px] text-[17.06px] leading-[1.35] font-bold tracking-[0.5909px] text-white !duration-500 group-hover:bg-white group-hover:text-forest group-focus-within:bg-white group-focus-within:text-forest"
+            >
+              <RollText>Buy now</RollText>
+              <RollIcon size={20.4739}>
+                <span className="relative block size-[20.4739px]">
+                  <img src="/assets/products/cart.svg" alt="" width={20.4739} height={20.4739} className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 group-focus-within:opacity-0" />
+                  <img src="/assets/products/cart-dark.svg" alt="" width={20.4739} height={20.4739} className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100" />
+                </span>
+              </RollIcon>
+            </a>
+            {/* tertiary: text + arrow, same label roll; colour follows the card's dark hover state */}
+            <a
+              href={`#product-${name.toLowerCase()}`}
+              className="btn-roll flex items-center gap-2 text-[17.06px] leading-[1.35] font-bold tracking-[0.5909px] text-black transition-colors duration-500 group-hover:text-white group-focus-within:text-white"
+            >
+              <RollText>View details</RollText>
+              <RollIcon size={18}>
+                <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M7 17L17 7M9 7h8v8" />
+                </svg>
+              </RollIcon>
+            </a>
+          </div>
         </div>
       </article>
     </div>
