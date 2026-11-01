@@ -22,7 +22,8 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 export function initAnimations(root: HTMLElement) {
   const mm = gsap.matchMedia();
 
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
+  mm.add('(prefers-reduced-motion: no-preference)', (context) => {
+    let cancelled = false;
     const q = <T extends Element = HTMLElement>(sel: string) => gsap.utils.toArray<T>(root.querySelectorAll(sel));
     const delay = (el: Element) => Number((el as HTMLElement).dataset.delay ?? 0);
     // Replays every time: plays entering from either direction, reverses out when the element leaves the viewport.
@@ -37,15 +38,61 @@ export function initAnimations(root: HTMLElement) {
       gsap.set(targets, { clearProps: 'transform' });
     };
 
-    // Hero intro timeline (runs on load, not on scroll)
-    const hero = root.querySelector('[data-hero]');
+    // Hero intro (runs once on load). Start states are set synchronously, before first paint, so nothing flashes;
+    // the timeline plays once the web fonts are in, so the headline splits on its final line breaks.
+    const hero = root.querySelector<HTMLElement>('[data-hero]');
     if (hero) {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.from('[data-header-item]', { y: -24, autoAlpha: 0, duration: 0.7, stagger: 0.08 })
-        .from(hero.querySelector('[data-hero-card]'), { scale: 0.96, autoAlpha: 0, duration: 1.1 }, 0)
-        .from(hero.querySelectorAll('[data-hero-item]'), { y: 40, autoAlpha: 0, duration: 0.9, stagger: 0.12 }, 0.25)
-        .from(hero.querySelectorAll('[data-float]'), { scale: 0, autoAlpha: 0, duration: 0.7, stagger: 0.06, ease: 'back.out(2)' }, 0.6)
-        .from(hero.querySelector('[data-hero-shot]'), { y: 120, autoAlpha: 0, duration: 1.2, ease: 'expo.out' }, 0.55);
+      const card = hero.querySelector('[data-hero-card]');
+      const bg = hero.querySelector('[data-hero-card] > [aria-hidden] img');
+      const h1 = hero.querySelector('h1');
+      const sub = hero.querySelector('h1 + p');
+      const buttons = hero.querySelector('[data-hero-item]:not(h1):not(p)');
+      const floats = gsap.utils.toArray<HTMLElement>(hero.querySelectorAll('[data-float]')).map((f) => f.parentElement!);
+      const shot = hero.querySelector('[data-hero-shot]');
+
+      gsap.set([h1, sub], { autoAlpha: 0 });
+      gsap.set(buttons, { autoAlpha: 0, y: 28 });
+      gsap.set(floats, { autoAlpha: 0, y: 46, filter: 'blur(10px)' });
+      gsap.set(shot, { autoAlpha: 0, y: 160, rotationX: 24, scale: 0.94, transformPerspective: 1800, transformOrigin: '50% 0%' });
+      // Card opens from a smaller rounded window. Edges are driven from one progress value: browsers shorten
+      // inset() strings when left == right, which would make a direct clipPath tween interpolate lopsided.
+      const reveal = { p: 0 };
+      const paintClip = () => {
+        const k = 1 - reveal.p;
+        gsap.set(card, { clipPath: `inset(${6 * k}% ${7 * k}% ${12 * k}% ${7 * k}% round ${20 + 24 * k}px)` });
+      };
+      paintClip();
+      gsap.set(bg, { scale: 1.14 });
+      gsap.set('[data-header-item]', { autoAlpha: 0, y: -22 });
+
+      let split: SplitText[] = [];
+      // context.add: anything created later still belongs to this matchMedia context and is reverted with it
+      const play = context.add('heroIntro', () => {
+        if (cancelled) return;
+        const words = SplitText.create(h1!, { type: 'words', mask: 'words' });
+        const subWords = SplitText.create(sub!, { type: 'words' });
+        split = [words, subWords];
+        gsap.set([h1, sub], { autoAlpha: 1 });
+
+        gsap
+          .timeline({ defaults: { ease: 'power3.out' } })
+          .to(reveal, { p: 1, duration: 1.5, ease: 'expo.inOut', onUpdate: paintClip }, 0)
+          .to(bg, { scale: 1, duration: 2.2, ease: 'power2.out' }, 0)
+          .to('[data-header-item]', { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.09 }, 0.1)
+          .from(words.words, { yPercent: 115, rotate: 4, filter: 'blur(6px)', duration: 1.05, stagger: 0.055, ease: 'power4.out' }, 0.3)
+          .from(subWords.words, { autoAlpha: 0, y: 14, filter: 'blur(6px)', duration: 0.7, stagger: 0.014 }, 0.8)
+          .to(buttons, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'back.out(1.7)' }, 1.05)
+          .to(floats, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: { each: 0.08, from: 'random' }, ease: 'power2.out' }, 1.1)
+          .to(shot, { autoAlpha: 1, y: 0, rotationX: 0, scale: 1, duration: 1.6, ease: 'expo.out' }, 1.0)
+          .add(() => {
+            // put the plain text back so layout/resizes behave like normal text afterwards
+            split.forEach((sp) => sp.revert());
+            gsap.set([card, bg, floats, shot], { clearProps: 'clipPath,filter,transform' });
+          });
+      });
+      const fontsReady = document.fonts?.ready ?? Promise.resolve();
+      // never hold the intro back more than 1.2s for slow fonts
+      Promise.race([fontsReady, new Promise((r) => setTimeout(r, 1200))]).then(() => play());
     }
 
     // Idle float for the hero logo badges: three independent sine loops (bob, sway, tilt) with
@@ -163,6 +210,9 @@ export function initAnimations(root: HTMLElement) {
         scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
       });
     });
+    return () => {
+      cancelled = true;
+    };
   });
 
   // Late-loading images/fonts change the page height; re-measure once they settle.
