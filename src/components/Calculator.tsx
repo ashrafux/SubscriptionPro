@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { TiltBadge } from './Badge';
 import { Chevron, Plus, Trash } from './Icons';
-import { RollIcon, RollText } from './Roll';
+import { RollText } from './Roll';
 
 const PRODUCTS = ['Google', 'ClickUp', 'Microsoft 365', 'Notion', 'Zoom', 'Adobe', 'ChatGPT', 'Canva'];
 const DISCOUNT = 0.1;
@@ -214,23 +214,15 @@ export function Calculator() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 bg-white px-5 py-7 md:flex-row md:items-center md:justify-between xl:px-[40px] xl:py-[40px]">
-          <div>
-            <p ref={totalRef} className="flex origin-left flex-wrap items-center gap-x-5 gap-y-2 font-poppins text-[24px] leading-[1.3] font-bold text-[#1d1d2b] sm:text-[28px] xl:text-[32px] xl:leading-[43px]">
-              Total Savings - {money(totals.savings)}
-              <span className="rounded-full bg-amber px-[10px] py-1 text-[14px] leading-[21px] font-medium text-white">Yearly</span>
-            </p>
-            <p className="mt-[7px] font-poppins text-[15px] leading-[1.6] text-[#3a3a3a] sm:text-[16px] xl:text-[18px] xl:leading-[30px]">
-              Total Official Price {money(totals.official)} <span className="hidden sm:inline">|</span>
-              <br className="sm:hidden" /> Total Discounted Price {money(totals.discounted)}
-            </p>
-          </div>
-          <a href="#purchase" className="btn-roll inline-flex items-center justify-center gap-[15px] rounded-full bg-pink px-10 py-4 font-poppins text-[17px] font-semibold text-white hover:brightness-95 md:self-auto xl:px-[46px] xl:py-5 xl:text-[18px]">
-            <RollText>Purchase Now</RollText>
-            <RollIcon size={20.4739}>
-              <img src="/assets/products/cart.svg" alt="" width={20.4739} height={20.4739} />
-            </RollIcon>
-          </a>
+        <div className="bg-white px-5 py-7 text-center xl:px-[40px] xl:py-[40px]">
+          <p ref={totalRef} className="flex origin-center flex-wrap items-center justify-center gap-x-5 gap-y-2 font-poppins text-[24px] leading-[1.3] font-bold text-[#1d1d2b] sm:text-[28px] xl:text-[32px] xl:leading-[43px]">
+            Total Savings - {money(totals.savings)}
+            <span className="rounded-full bg-amber px-[10px] py-1 text-[14px] leading-[21px] font-medium text-white">Yearly</span>
+          </p>
+          <p className="mt-[7px] font-poppins text-[15px] leading-[1.6] text-[#3a3a3a] sm:text-[16px] xl:text-[18px] xl:leading-[30px]">
+            Total Official Price {money(totals.official)} <span className="hidden sm:inline">|</span>
+            <br className="sm:hidden" /> Total Discounted Price {money(totals.discounted)}
+          </p>
         </div>
       </div>
     </section>
