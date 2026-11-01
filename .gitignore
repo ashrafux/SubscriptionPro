@@ -1,0 +1,14 @@
+# dependencies & build output
+node_modules/
+dist/
+*.tsbuildinfo
+.vercel/
+
+# OS / editor
+.DS_Store
+*.local
+
+# not used by the site
+public/_sheet/
+public/assets/hero/Hero image.png
+public/assets/cta/CTA BG.png
