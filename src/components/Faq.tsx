@@ -26,7 +26,7 @@ export function Faq() {
         </h2>
 
         <div data-anim="fade-up" className="mt-8 flex justify-center md:mt-12">
-          <div role="tablist" className="flex gap-2 rounded-full border border-[#ececec] p-[5px] md:gap-[45px]">
+          <div role="tablist" className="flex gap-1 rounded-full border border-[#ececec] p-[5px] md:gap-2">
             {tabs.map((t) => (
               <button
                 key={t}
@@ -36,8 +36,8 @@ export function Faq() {
                   setTab(t);
                   setOpen(null);
                 }}
-                className={`rounded-full py-[8.5px] text-[16px] leading-[1.5] transition md:text-[20px] ${
-                  tab === t ? 'w-[110px] bg-black text-white md:w-[141px]' : 'px-3 text-[#8b8b8b] hover:text-black md:px-0'
+                className={`rounded-full px-5 py-[8.5px] text-[16px] leading-[1.5] whitespace-nowrap transition md:px-7 md:text-[20px] ${
+                  tab === t ? 'bg-black text-white' : 'text-[#8b8b8b] hover:text-black'
                 }`}
               >
                 {t}
