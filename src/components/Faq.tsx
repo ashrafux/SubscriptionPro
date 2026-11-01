@@ -46,11 +46,11 @@ export function Faq() {
           </div>
         </div>
 
-        <ul data-anim="stagger" data-stagger="0.06" className="mt-10 flex flex-col gap-4 md:mt-[60px] md:gap-6">
+        <ul data-anim="stagger" data-stagger="0.06" className="mt-10 flex flex-col gap-[10px] md:mt-[60px]">
           {faqs[tab].map((f, i) => {
             const isOpen = open === i;
             return (
-              <li key={`${tab}-${i}`} className="rounded-[16px] bg-card transition-colors hover:bg-[#ebebeb]">
+              <li key={`${tab}-${i}`} className="group rounded-[16px] bg-card transition-colors hover:bg-[#ebebeb]">
                 <button
                   type="button"
                   aria-expanded={isOpen}
@@ -58,7 +58,7 @@ export function Faq() {
                   className="flex min-h-[84px] w-full items-center justify-between gap-4 px-5 py-4 text-left md:min-h-[117px] md:gap-6 md:px-[30px]"
                 >
                   <span className="text-[16px] leading-[1.35] font-semibold md:text-[20px]">{f.q}</span>
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white md:size-[57px]">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white text-black transition-colors duration-300 group-hover:bg-pink group-hover:text-white group-has-[:focus-visible]:bg-pink group-has-[:focus-visible]:text-white md:size-[57px]">
                     <Chevron className={`size-[23px] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                   </span>
                 </button>
