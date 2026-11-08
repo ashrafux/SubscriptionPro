@@ -96,7 +96,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
             <Faq seeMore={page === 'home-2'} />
             {page === 'home-2' ? <CtaOrbit /> : <Cta />}
           </main>
-          <Footer />
+          {page === 'home-2' ? <Footer3 /> : <Footer />}
         </>
       )}
     </div>
