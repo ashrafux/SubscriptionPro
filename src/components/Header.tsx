@@ -86,12 +86,12 @@ export function Header({ page = 'home-1', overlay = false }: { page?: PageId; ov
   return (
     <header ref={headerRef} className={overlay ? 'absolute inset-x-0 top-0 z-40 px-5 pt-5' : 'relative z-40 bg-white'}>
       <Container
-        className={`relative flex items-center justify-between gap-6 ${overlay ? 'mt-4 h-[48px] lg:mt-[30px] lg:h-[45px]' : 'h-[88px] lg:h-[105px]'}`}
+        className={`relative flex items-center justify-between gap-6 ${overlay ? 'mt-4 h-[48px] lg:mt-[30px] lg:h-[43px] lg:pr-[30px] lg:pl-[33px]' : 'h-[88px] lg:h-[105px]'}`}
         // mega panels hang just below the menu row; the overlay row is shorter, so anchor them a bit lower
         style={overlay ? ({ '--menu-top': 'calc(100% + 6px)' } as React.CSSProperties) : undefined}
       >
         <div data-header-item>
-          <Logo className="w-[180px] lg:w-[200px] xl:w-[246px]" />
+          <Logo className={overlay ? 'w-[180px] lg:w-[200px] min-[1800px]:!w-[246px]' : 'w-[180px] lg:w-[200px] xl:w-[246px]'} />
         </div>
 
         <nav data-header-item aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-[22px] text-[16px] leading-[1.3] whitespace-nowrap text-ink lg:flex xl:gap-[30px] xl:text-[18px]">

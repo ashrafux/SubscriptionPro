@@ -3,6 +3,7 @@ import { initAnimations } from './animations';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Intro } from './components/Intro';
+import { IntroKicker } from './components/IntroKicker';
 import { Divider } from './components/Container';
 import { Stats } from './components/Stats';
 import { Partners } from './components/Partners';
@@ -27,7 +28,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
       <Header page={page} overlay={page === 'home-2'} />
       <main>
         <Hero withHeader={page === 'home-2'} />
-        <Intro />
+        {page === 'home-2' ? <IntroKicker /> : <Intro />}
         <Divider />
         <Stats />
         <Divider />

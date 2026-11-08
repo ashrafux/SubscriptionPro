@@ -24,6 +24,8 @@ export function Hero({ withHeader = false }: { withHeader?: boolean }) {
       <div data-hero-card className="relative mx-auto max-w-[1880px] overflow-hidden rounded-[20px]">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <img src="/assets/hero/hero-bg.jpg" alt="" className="absolute inset-0 size-full object-cover" />
+          {/* Home Two: soft white haze in the top-left corner so the logo reads clearly over the pink */}
+          {withHeader && <div className="absolute -top-[140px] -left-[160px] h-[320px] w-[620px] rounded-full bg-white/70 blur-[70px]" />}
         </div>
 
         {/* Floating partner logos (wide screens only). The layer follows the card width but keeps ≥40px from each edge. */}
