@@ -90,18 +90,28 @@ export const tabs: Tab[] = [
 
 const stateOf = (i: number, active: number) => (i === active ? 'active' : i < active ? 'past' : 'next');
 
-export function Glance() {
+/** `centered`: Home Two stacks the heading and description in the middle. */
+export function Glance({ centered = false }: { centered?: boolean }) {
   const [tab, setTab] = useState(0);
 
   return (
     <section className="px-5 pt-16 pb-16 md:pt-24 md:pb-24 xl:pt-[192px] xl:pb-[144px]">
       <div className="mx-auto max-w-[1496px]">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+        <div
+          className={
+            centered
+              ? 'mx-auto flex max-w-[760px] flex-col items-center gap-5 text-center md:gap-6'
+              : 'flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10'
+          }
+        >
           <h2 data-split className="max-w-[666px] text-[34px] leading-[1.1] font-bold tracking-[0.5909px] sm:text-[44px] lg:text-[60px]">
             Screenshot at a glance <br className="hidden lg:block" />
             with Prior Talks
           </h2>
-          <p data-anim="fade-up" className="max-w-[352px] text-[17px] leading-[1.5] text-muted md:text-[20px] min-[1560px]:mr-[-27px]">
+          <p
+            data-anim="fade-up"
+            className={`text-[17px] leading-[1.5] text-muted md:text-[20px] ${centered ? 'max-w-[560px] text-balance' : 'max-w-[352px] min-[1560px]:mr-[-27px]'}`}
+          >
             Unlock partner-exclusive SaaS deals, save on renewals, and manage your stack from one dashboard.
           </p>
         </div>

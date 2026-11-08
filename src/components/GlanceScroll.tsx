@@ -13,7 +13,7 @@ const PIN_QUERY = '(min-width: 1024px) and (min-height: 680px)';
 const STEPS = tabs.length - 1;
 
 /**
- * Home Two "Screenshot at a glance": on wide, tall screens the section pins. The heading folds away first,
+ * Home Two "Screenshot at a glance": on wide, tall screens the tabs + slides pin once the heading has scrolled away;
  * then every scroll step moves to the next tab while the slides travel right → left (scrubbed + snapped).
  * Narrow / short screens get the regular click-to-switch Glance section.
  */
@@ -25,13 +25,12 @@ export function GlanceScroll() {
     mq.addEventListener('change', on);
     return () => mq.removeEventListener('change', on);
   }, []);
-  return pinnable ? <PinnedGlance /> : <Glance />;
+  return pinnable ? <PinnedGlance /> : <Glance centered />;
 }
 
 function PinnedGlance() {
   const [active, setActive] = useState(0);
   const sec = useRef<HTMLElement>(null);
-  const head = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const tablist = useRef<HTMLDivElement>(null);
   const pill = useRef<HTMLSpanElement>(null);
@@ -49,7 +48,7 @@ function PinnedGlance() {
         scrollTrigger: {
           trigger: sec.current,
           start: 'top top',
-          end: () => `+=${window.innerHeight * (0.7 + 0.85 * STEPS)}`,
+          end: () => `+=${window.innerHeight * (0.6 + 0.85 * STEPS)}`,
           pin: true,
           scrub: 0.9,
           anticipatePin: 1,
@@ -82,11 +81,11 @@ function PinnedGlance() {
       });
       st.current = tl.scrollTrigger ?? null;
 
-      // 1) heading + description fold away; the tabs and slides rise into the freed space
-      tl.to(head.current, { height: 0, paddingBottom: 0, autoAlpha: 0, y: -50, duration: 0.7, ease: 'power2.inOut' });
+      // short lead-in before the first stop, so scrolling into the pin settles on Dashboard instead of skipping to Products
+      tl.to({}, { duration: 0.6 });
       tl.addLabel('s0');
 
-      // 2) one step per tab: the track slides left, the outgoing screen tips away, the incoming one swings in
+      // one step per tab: the track slides left, the outgoing screen tips away, the incoming one swings in
       slides.forEach((slide, i) => {
         if (!i) return;
         const prev = slides[i - 1];
@@ -141,20 +140,18 @@ function PinnedGlance() {
 
   return (
     <div className="pt-16 md:pt-24 xl:pt-[120px]">
+      {/* Heading sits above the pinned area and simply scrolls away, so the pinned tabs + slides get the full screen */}
+      <div className="mx-auto flex max-w-[760px] flex-col items-center gap-5 px-5 text-center md:gap-6">
+        <h2 data-split className="text-[34px] leading-[1.1] font-bold tracking-[0.5909px] sm:text-[44px] lg:text-[60px]">
+          Screenshot at a glance <br />
+          with Prior Talks
+        </h2>
+        <p data-anim="fade-up" className="max-w-[560px] text-[17px] leading-[1.5] text-balance text-muted md:text-[20px]">
+          Unlock partner-exclusive SaaS deals, save on renewals, and manage your stack from one dashboard.
+        </p>
+      </div>
       <section ref={sec} className="flex h-svh flex-col px-5 pt-[clamp(28px,7vh,80px)] pb-[clamp(20px,4vh,44px)]">
         <div className="mx-auto flex min-h-0 w-full max-w-[1496px] flex-1 flex-col">
-          <div ref={head} className="shrink-0 overflow-hidden pb-[clamp(24px,5vh,64px)]">
-            <div className="flex items-end justify-between gap-10">
-              <h2 data-split className="max-w-[666px] text-[min(60px,6vh)] leading-[1.1] font-bold tracking-[0.5909px]">
-                Screenshot at a glance <br />
-                with Prior Talks
-              </h2>
-              <p data-anim="fade-up" className="max-w-[352px] text-[min(20px,2.3vh)] leading-[1.5] text-muted min-[1560px]:mr-[-27px]">
-                Unlock partner-exclusive SaaS deals, save on renewals, and manage your stack from one dashboard.
-              </p>
-            </div>
-          </div>
-
           <div className="flex min-h-0 flex-1 flex-col justify-center">
             <div className="flex shrink-0 justify-center">
               <div ref={tablist} role="tablist" aria-label="SubscriptionPro screens" className="relative flex gap-2 rounded-full bg-[#ececec] p-[5px]">

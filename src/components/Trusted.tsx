@@ -1,3 +1,4 @@
+import { PillButton } from './PillButton';
 import { Analytics, Coffee, MoneyStack } from './Icons';
 import { RollText } from './Roll';
 import { ScaledScreen } from './apart/Shell';
@@ -21,16 +22,26 @@ const items = [
   },
 ];
 
-export function Trusted() {
+/** `centered`: Home Two centres the heading with a two-line description under it and uses a secondary pill button. */
+export function Trusted({ centered = false }: { centered?: boolean }) {
   return (
     <section className="px-5 py-16 md:py-24 xl:pt-[144px] xl:pb-[192px]">
       <div className="mx-auto max-w-[1496px]">
-        <div className="flex flex-col gap-5 lg:flex-row lg:justify-between lg:gap-10">
+        <div
+          className={
+            centered
+              ? 'mx-auto flex max-w-[960px] flex-col items-center gap-5 text-center md:gap-6'
+              : 'flex flex-col gap-5 lg:flex-row lg:justify-between lg:gap-10'
+          }
+        >
           <h2 data-split className="max-w-[929px] text-[34px] leading-[1.1] font-bold tracking-[0.5909px] sm:text-[44px] lg:text-[60px]">
             Trusted by Teams That <br className="hidden lg:block" />
             Save More Every Renewal
           </h2>
-          <p data-anim="fade-up" className="max-w-[352px] text-[17px] leading-[1.5] text-muted md:text-[20px] lg:pt-3 2xl:mr-[154px]">
+          <p
+            data-anim="fade-up"
+            className={`text-[17px] leading-[1.5] text-muted md:text-[20px] ${centered ? 'max-w-[700px] text-balance' : 'max-w-[352px] lg:pt-3 2xl:mr-[154px]'}`}
+          >
             Thousands of businesses reduce software costs, simplify subscription management, and unlock exclusive
             partner pricing with SubscriptionPro.
           </p>
@@ -71,9 +82,17 @@ export function Trusted() {
                 </li>
               ))}
             </ul>
-            <a data-anim="fade-up" href="#clients" className="btn-roll mt-10 ml-[68px] inline-flex self-start border-b-2 border-current text-[22px] leading-[1.35] font-bold md:mt-[52px] md:ml-[87px] md:text-[28px]">
-              <RollText>See the client →</RollText>
-            </a>
+            {centered ? (
+              <div data-anim="fade-up" className="mt-10 ml-[68px] md:mt-[52px] md:ml-[87px]">
+                <PillButton href="#clients" variant="secondary" arrow>
+                  See the client
+                </PillButton>
+              </div>
+            ) : (
+              <a data-anim="fade-up" href="#clients" className="btn-roll mt-10 ml-[68px] inline-flex self-start border-b-2 border-current text-[22px] leading-[1.35] font-bold md:mt-[52px] md:ml-[87px] md:text-[28px]">
+                <RollText>See the client →</RollText>
+              </a>
+            )}
           </div>
         </div>
       </div>
