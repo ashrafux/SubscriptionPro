@@ -23,7 +23,8 @@ const items = [
 ];
 
 /** `centered`: Home Two centres the heading with a two-line description under it and uses a secondary pill button. */
-export function Trusted({ centered = false }: { centered?: boolean }) {
+/** `pinkCta`: Home Three — "See the Clients" in the brand pink so it reads as clickable (review row 14). */
+export function Trusted({ centered = false, pinkCta = false }: { centered?: boolean; pinkCta?: boolean }) {
   return (
     <section className="px-5 py-16 md:py-24 xl:pt-[144px] xl:pb-[192px]">
       <div className="mx-auto max-w-[1496px]">
@@ -84,8 +85,8 @@ export function Trusted({ centered = false }: { centered?: boolean }) {
             </ul>
             {centered ? (
               <div data-anim="fade-up" className="mt-10 ml-[68px] md:mt-[52px] md:ml-[87px]">
-                <PillButton href="#clients" variant="secondary" arrow>
-                  See the client
+                <PillButton href="#clients" variant={pinkCta ? 'pink' : 'secondary'} arrow>
+                  {pinkCta ? 'See the Clients' : 'See the client'}
                 </PillButton>
               </div>
             ) : (

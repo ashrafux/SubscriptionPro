@@ -6,6 +6,16 @@ import { GlanceBilling, GlanceDashboard, GlanceDeposit, GlanceIntegrations, Glan
 
 type Tab = { label: string; title: string; intro: string; points: string[]; bg: string; View: ComponentType };
 
+/** Home Three: shorter featured copy (review row 13) — a short title, one line, three key points with the keyword first. */
+export const shortCopy: Record<string, { title: string; intro: string; points: [string, string][] }> = {
+  Dashboard: { title: 'Your whole SaaS stack, one dashboard', intro: 'See every tool you pay for in one place.', points: [['Renewal dates', 'and costs at a glance'], ['Alerts', 'before any surprise charge'], ['Live spend', 'for smarter budgets']] },
+  Products: { title: '100+ tools at partner prices', intro: 'Official licenses, bought in a couple of clicks.', points: [['Compare plans', 'side by side'], ['Monthly or yearly', 'for one seat or a team'], ['Up to 40% less', 'than buying direct']] },
+  Integrations: { title: 'Connect the tools you already use', intro: 'Bring existing subscriptions in so nothing slips.', points: [['One-click connect', 'for popular apps'], ['Seats and renewals', 'sync automatically'], ['Duplicates', 'spotted across teams']] },
+  'Starter Deals': { title: 'Start new tools for less', intro: 'Offers made for growing teams.', points: [['Up to 50% off', 'your first year'], ['Extra free months', 'on partner tools'], ['New deals', 'every week']] },
+  'Deposit Fund': { title: 'Top up once, renew without thinking', intro: 'Your wallet pays every renewal on time.', points: [['Card, bank or PayPal', 'top-ups'], ['Auto-pay', 'so nothing lapses'], ['Low-balance alerts', 'before due dates']] },
+  Billing: { title: 'All your SaaS billing in one place', intro: 'No more hunting through vendor portals.', points: [['Every invoice', 'in one click'], ['One bill', 'instead of many'], ['Tax-ready exports', 'for finance']] },
+};
+
 // Backgrounds: abstract gradients generated with Higgsfield (GPT Image 2.5), one per tab.
 export const tabs: Tab[] = [
   {
@@ -91,7 +101,7 @@ export const tabs: Tab[] = [
 const stateOf = (i: number, active: number) => (i === active ? 'active' : i < active ? 'past' : 'next');
 
 /** `centered`: Home Two stacks the heading and description in the middle. */
-export function Glance({ centered = false }: { centered?: boolean }) {
+export function Glance({ centered = false, compact = false }: { centered?: boolean; compact?: boolean }) {
   const [tab, setTab] = useState(0);
 
   return (
@@ -141,7 +151,25 @@ export function Glance({ centered = false }: { centered?: boolean }) {
         <div className="mt-8 grid gap-5 md:mt-[60px] md:gap-7 xl:grid-cols-[607fr_861fr]">
           {/* left: copy for the active tab (all stacked in one cell, so the card keeps the tallest height) */}
           <div data-anim="slide-left" className="grid rounded-[20px] bg-stat-lime px-6 py-9 sm:px-10 md:py-12 xl:px-[60px] xl:py-[58px]">
-            {tabs.map((t, i) => (
+            {tabs.map((t, i) => {
+              const c = shortCopy[t.label];
+              return compact && c ? (
+              <div key={t.label} className="apart-copy col-start-1 row-start-1 self-center" data-state={stateOf(i, tab)} aria-hidden={i !== tab}>
+                <span className="font-poppins text-[13px] font-semibold tracking-[0.12em] text-[#6d8a3a] uppercase">{t.label}</span>
+                <h3 className="mt-3 max-w-[440px] text-[26px] leading-[1.25] font-bold md:text-[32px]">{c.title}</h3>
+                <p className="mt-4 max-w-[400px] font-lato text-[17px] leading-[1.5] text-[#6b6b6b] md:text-[18px]">{c.intro}</p>
+                <ul className="mt-7 flex flex-col gap-3.5">
+                  {c.points.map(([k, rest]) => (
+                    <li key={k} className="flex items-center gap-3 rounded-[14px] bg-white/70 px-4 py-3 font-lato text-[17px] text-[#3c3c3c] md:text-[18px]">
+                      <CheckCircle className="size-5 shrink-0 text-black" />
+                      <span>
+                        <b className="font-bold text-black">{k}</b> {rest}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              ) : (
               <div key={t.label} className="apart-copy col-start-1 row-start-1" data-state={stateOf(i, tab)} aria-hidden={i !== tab}>
                 <h3 className="max-w-[468px] text-[26px] leading-[1.3] font-bold md:text-[32px] md:leading-[1.35]">{t.title}</h3>
                 <p className="mt-5 max-w-[422px] font-lato text-[17px] leading-[25px] text-[#6b6b6b] md:mt-6 md:text-[18px]">{t.intro}</p>
@@ -154,7 +182,8 @@ export function Glance({ centered = false }: { centered?: boolean }) {
                   ))}
                 </ul>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* right: the tab's screen on its own colourful background */}

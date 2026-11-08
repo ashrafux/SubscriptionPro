@@ -38,14 +38,25 @@ const Chevron = ({ open }: { open: boolean }) => (
 
 type Menu = 'home' | 'products' | 'resources' | null;
 
-/** `overlay`: the header floats transparently inside the hero card (Home Two) instead of sitting on a white strip. */
-export function Header({ page = 'home-1', overlay = false }: { page?: PageId; overlay?: boolean }) {
+/**
+ * `overlay`: the header floats transparently inside the hero card (Home Two) instead of sitting on a white strip.
+ * `sticky`: Home Three — stays on top while scrolling, turns frosted and compact once the page moves, menu items get pill hovers.
+ */
+export function Header({ page = 'home-1', overlay = false, sticky = false }: { page?: PageId; overlay?: boolean; sticky?: boolean }) {
   const current = pages.find((p) => p.id === page) ?? pages[0];
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [menu, setMenu] = useState<Menu>(null);
   const closeTimer = useRef<number>();
   const headerRef = useRef<HTMLElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    if (!sticky) return;
+    const on = () => setScrolled(window.scrollY > 12);
+    on();
+    window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, [sticky]);
 
   // Hover intent: open at once, close after a short grace period so the pointer can travel into the panel.
   const openMenu = (m: Menu) => {
@@ -71,7 +82,7 @@ export function Header({ page = 'home-1', overlay = false }: { page?: PageId; ov
   const trigger = (m: Exclude<Menu, null>, label: string) => (
     <button
       type="button"
-      className={`flex items-center gap-[8px] transition-colors hover:text-black ${menu === m ? 'text-black' : ''}`}
+      className={`flex items-center gap-[8px] transition-colors hover:text-black ${menu === m ? 'text-black' : ''} ${sticky ? `rounded-full px-4 py-2 hover:bg-[#f3f3f6] ${menu === m ? 'bg-[#f3f3f6]' : ''}` : ''}`}
       aria-expanded={menu === m}
       aria-haspopup="true"
       onMouseEnter={() => openMenu(m)}
@@ -84,17 +95,46 @@ export function Header({ page = 'home-1', overlay = false }: { page?: PageId; ov
   );
 
   return (
-    <header ref={headerRef} className={overlay ? 'absolute inset-x-0 top-0 z-40 px-5 pt-5' : 'relative z-40 bg-white'}>
+    <header
+      ref={headerRef}
+      className={
+        overlay
+          ? 'absolute inset-x-0 top-0 z-40 px-5 pt-5'
+          : sticky
+            ? `sticky top-0 z-50 transition-[background-color,box-shadow] duration-300 ${scrolled ? 'bg-white/85 shadow-[0_1px_0_rgba(20,20,43,0.06),0_12px_30px_-14px_rgba(20,20,43,0.18)] backdrop-blur-xl' : 'bg-white'}`
+            : 'relative z-40 bg-white'
+      }
+    >
       <Container
-        className={`relative flex items-center justify-between gap-6 ${overlay ? 'mt-4 h-[48px] lg:mt-[30px] lg:h-[43px] lg:pr-[30px] lg:pl-[33px]' : 'h-[88px] lg:h-[105px]'}`}
+        className={`relative flex items-center justify-between gap-6 ${
+          overlay
+            ? 'mt-4 h-[48px] lg:mt-[30px] lg:h-[43px] lg:pr-[30px] lg:pl-[33px]'
+            : sticky
+              ? `transition-[height] duration-300 ${scrolled ? 'h-[68px] lg:h-[76px]' : 'h-[80px] lg:h-[96px]'}`
+              : 'h-[88px] lg:h-[105px]'
+        }`}
         // mega panels hang just below the menu row; the overlay row is shorter, so anchor them a bit lower
         style={overlay ? ({ '--menu-top': 'calc(100% + 6px)' } as React.CSSProperties) : undefined}
       >
         <div data-header-item>
-          <Logo className={overlay ? 'w-[180px] lg:w-[200px] min-[1800px]:!w-[246px]' : 'w-[180px] lg:w-[200px] xl:w-[246px]'} />
+          <Logo
+            className={
+              overlay
+                ? 'w-[180px] lg:w-[200px] min-[1800px]:!w-[246px]'
+                : sticky
+                  ? `transition-[width] duration-300 ${scrolled ? 'w-[170px] lg:w-[190px]' : 'w-[180px] lg:w-[210px]'}`
+                  : 'w-[180px] lg:w-[200px] xl:w-[246px]'
+            }
+          />
         </div>
 
-        <nav data-header-item aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-[22px] text-[16px] leading-[1.3] whitespace-nowrap text-ink lg:flex xl:gap-[30px] xl:text-[18px]">
+        <nav
+          data-header-item
+          aria-label="Main"
+          className={`absolute left-1/2 hidden -translate-x-1/2 items-center leading-[1.3] whitespace-nowrap text-ink lg:flex ${
+            sticky ? 'gap-1 rounded-full border border-[#efeff3] bg-white/70 p-1 text-[16px] xl:text-[17px]' : 'gap-[22px] text-[16px] xl:gap-[30px] xl:text-[18px]'
+          }`}
+        >
           {/* Home One / Home Two switcher */}
           <div className="relative">
             {trigger('home', current.label)}
@@ -126,7 +166,7 @@ export function Header({ page = 'home-1', overlay = false }: { page?: PageId; ov
             </div>
           </div>
           {trigger('products', 'Products')}
-          <a href="#submit" className="transition-colors hover:text-black" onMouseEnter={() => setMenu(null)}>
+          <a href="#submit" className={`transition-colors hover:text-black ${sticky ? 'rounded-full px-4 py-2 hover:bg-[#f3f3f6]' : ''}`} onMouseEnter={() => setMenu(null)}>
             Submit Your Product
           </a>
           {trigger('resources', 'Resources')}
