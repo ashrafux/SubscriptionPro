@@ -81,15 +81,25 @@ function ProductCard({ name, logo, save }: Product) {
   );
 }
 
-export function Partners() {
+/** `centered`: Home Two stacks the heading and description in the middle instead of left/right. */
+export function Partners({ centered = false }: { centered?: boolean }) {
   return (
     <section id="products" className="px-5 pt-16 pb-0 md:pt-24 xl:pt-[144px]">
       <div className="mx-auto max-w-[1496px]">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-          <h2 data-split className="max-w-[621px] text-[34px] leading-[1.1] font-bold tracking-[0.5909px] sm:text-[44px] lg:text-[60px]">
+        <div
+          className={
+            centered
+              ? 'mx-auto flex max-w-[760px] flex-col items-center gap-5 text-center md:gap-6'
+              : 'flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10'
+          }
+        >
+          <h2 data-split className={`max-w-[621px] text-[34px] leading-[1.1] font-bold tracking-[0.5909px] sm:text-[44px] lg:text-[60px] ${centered ? 'text-balance' : ''}`}>
             Official Partner of Global SaaS Platforms
           </h2>
-          <p data-anim="fade-up" className="max-w-[352px] text-[17px] leading-[1.5] text-muted md:text-[20px] min-[1560px]:mr-[-27px]">
+          <p
+            data-anim="fade-up"
+            className={`text-[17px] leading-[1.5] text-muted md:text-[20px] ${centered ? 'max-w-[560px] text-balance' : 'max-w-[352px] min-[1560px]:mr-[-27px]'}`}
+          >
             Unlock partner-exclusive SaaS deals, save on renewals, and manage your stack from one dashboard.
           </p>
         </div>
