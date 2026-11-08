@@ -93,7 +93,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
             <Divider />
             {page === 'home-2' ? <Calculator3 plain /> : <Calculator />}
             <Divider />
-            <Faq />
+            <Faq seeMore={page === 'home-2'} />
             {page === 'home-2' ? <CtaOrbit /> : <Cta />}
           </main>
           <Footer />

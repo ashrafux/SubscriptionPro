@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Chevron } from './Icons';
 
@@ -14,9 +14,23 @@ const faqs: Record<(typeof tabs)[number], { q: string; a: string }[]> = {
   Resources: Array.from({ length: 7 }, () => ({ q, a })),
 };
 
-export function Faq() {
+const LIMIT = 5;
+
+/** `seeMore`: Home Two — same design, but only the first five questions show until "See more" is pressed. */
+export function Faq({ seeMore = false }: { seeMore?: boolean }) {
   const [tab, setTab] = useState<(typeof tabs)[number]>('General');
   const [open, setOpen] = useState<number | null>(null);
+  const [all, setAll] = useState(false);
+  const list = useRef<HTMLUListElement>(null);
+  const shown = seeMore && !all ? faqs[tab].slice(0, LIMIT) : faqs[tab];
+  const hidden = faqs[tab].length - LIMIT;
+
+  // newly revealed questions rise in one by one
+  useLayoutEffect(() => {
+    if (!seeMore || !all || !list.current) return;
+    const extra = Array.from(list.current.children).slice(LIMIT);
+    gsap.from(extra, { y: 24, autoAlpha: 0, duration: 0.5, stagger: 0.07, ease: 'power3.out' });
+  }, [all, seeMore]);
 
   return (
     <section className="px-5 py-16 md:py-24 xl:pt-[145px] xl:pb-[192px]">
@@ -35,6 +49,7 @@ export function Faq() {
                 onClick={() => {
                   setTab(t);
                   setOpen(null);
+                  setAll(false);
                 }}
                 className={`rounded-full px-5 py-[8.5px] text-[16px] leading-[1.5] whitespace-nowrap transition md:px-7 md:text-[20px] ${
                   tab === t ? 'bg-black text-white' : 'text-[#8b8b8b] hover:text-black'
@@ -46,8 +61,8 @@ export function Faq() {
           </div>
         </div>
 
-        <ul data-anim="stagger" data-stagger="0.06" className="mt-10 flex flex-col gap-[10px] md:mt-[60px]">
-          {faqs[tab].map((f, i) => {
+        <ul ref={list} data-anim="stagger" data-stagger="0.06" className="mt-10 flex flex-col gap-[10px] md:mt-[60px]">
+          {shown.map((f, i) => {
             const isOpen = open === i;
             return (
               <li key={`${tab}-${i}`} className="group rounded-[16px] bg-card transition-colors hover:bg-[#ebebeb]">
@@ -76,6 +91,19 @@ export function Faq() {
             );
           })}
         </ul>
+
+        {seeMore && hidden > 0 && (
+          <div className="mt-8 flex justify-center md:mt-10">
+            <button
+              type="button"
+              onClick={() => setAll((v) => !v)}
+              className="flex items-center gap-2 rounded-full border-[1.5px] border-[#14141f] px-7 py-3.5 text-[16px] font-semibold transition hover:bg-[#14141f] hover:text-white"
+            >
+              {all ? 'See less' : `See more (${hidden})`}
+              <Chevron className={`size-5 transition-transform duration-300 ${all ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
