@@ -91,7 +91,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
             <Divider />
             <Trusted centered={page === 'home-2'} pinkCta={page === 'home-2'} />
             <Divider />
-            <Calculator />
+            {page === 'home-2' ? <Calculator3 plain /> : <Calculator />}
             <Divider />
             <Faq />
             {page === 'home-2' ? <CtaOrbit /> : <Cta />}

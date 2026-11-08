@@ -48,7 +48,8 @@ function CycleToggle({ value, onChange }: { value: Cycle; onChange: (c: Cycle) =
   );
 }
 
-export function Calculator3() {
+/** `plain`: Home Two — no drop shadow on the box and a fully neutral total-savings panel. */
+export function Calculator3({ plain = false }: { plain?: boolean }) {
   const [rows, setRows] = useState<Row[]>(initial);
   const totalRef = useRef<HTMLParagraphElement>(null);
   const totals = useMemo(() => {
@@ -78,7 +79,7 @@ export function Calculator3() {
         </p>
       </div>
 
-      <div data-anim="fade-up" className="mx-auto mt-10 max-w-[1180px] overflow-hidden rounded-[28px] border border-[#eceef4] bg-white shadow-[0_40px_80px_-50px_rgba(20,30,90,0.45)] md:mt-14">
+      <div data-anim="fade-up" className={`mx-auto mt-10 max-w-[1180px] overflow-hidden rounded-[28px] border border-[#eceef4] bg-white md:mt-14 ${plain ? '' : 'shadow-[0_40px_80px_-50px_rgba(20,30,90,0.45)]'}`}>
         <div className="p-4 sm:p-6 xl:p-8">
           {/* column labels (desktop) */}
           <div className="hidden grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.8fr)_44px] gap-4 px-4 pb-3 lg:grid">
@@ -157,16 +158,16 @@ export function Calculator3() {
         </div>
 
         {/* centred total */}
-        <div className="border-t border-[#eceef4] bg-[linear-gradient(110deg,#fdf1f8,#f3f1ff_50%,#fff7ea)] px-5 py-9 text-center md:py-11">
+        <div className={`border-t border-[#eceef4] px-5 py-9 text-center md:py-11 ${plain ? 'bg-[#f4f4f6]' : 'bg-[linear-gradient(110deg,#fdf1f8,#f3f1ff_50%,#fff7ea)]'}`}>
           <p className="font-poppins text-[14px] font-medium tracking-[0.14em] text-[#7b8794] uppercase">Total savings</p>
           <p ref={totalRef} className="mt-2 flex origin-center items-center justify-center gap-3 font-poppins text-[44px] leading-none font-bold text-[#14141f] md:text-[56px]">
             {money(totals.savings)}
-            <span className="rounded-full bg-amber px-3 py-1 text-[14px] leading-[1.4] font-medium text-white">Yearly</span>
+            <span className={`rounded-full px-3 py-1 text-[14px] leading-[1.4] font-medium ${plain ? 'bg-[#e4e4e9] text-[#3c4650]' : 'bg-amber text-white'}`}>Yearly</span>
           </p>
           <p className="mt-4 font-poppins text-[15px] text-[#5d6b75] md:text-[17px]">
             Official price <b className="font-semibold text-[#14141f]">{money(totals.official)}</b>
             <span className="mx-3 text-[#c9ccd6]">|</span>
-            With SubscriptionPro <b className="font-semibold text-pink">{money(totals.discounted)}</b>
+            With SubscriptionPro <b className={`font-semibold ${plain ? 'text-[#14141f]' : 'text-pink'}`}>{money(totals.discounted)}</b>
           </p>
         </div>
       </div>
