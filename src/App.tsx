@@ -90,6 +90,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
             {page === 'home-2' ? <GlanceScroll /> : <Glance />}
             <Divider />
             <Trusted centered={page === 'home-2'} pinkCta={page === 'home-2'} />
+            {page === 'home-2' && <ClientLogos className="-mt-4 pb-16 md:-mt-8 md:pb-24 xl:-mt-[72px] xl:pb-[130px]" />}
             <Divider />
             {page === 'home-2' ? <Calculator3 plain /> : <Calculator />}
             <Divider />

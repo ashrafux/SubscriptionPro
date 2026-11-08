@@ -48,9 +48,10 @@ function Row({ reverse = false }: { reverse?: boolean }) {
   );
 }
 
-export function ClientLogos() {
+/** `className` sets the section spacing (Home Two places it straight after Trusted, which already has a deep bottom gap). */
+export function ClientLogos({ className = 'pt-16 md:pt-24 xl:pt-[120px]' }: { className?: string }) {
   return (
-    <section aria-label="Our clients" className="pt-16 md:pt-24 xl:pt-[120px]">
+    <section aria-label="Our clients" className={className}>
       <style>{'@keyframes logo-marquee{from{transform:translateX(0)}to{transform:translateX(-100%)}}@media (prefers-reduced-motion:reduce){[style*="logo-marquee"]{animation:none!important}}'}</style>
       <p data-anim="fade-up" className="px-5 text-center text-[15px] font-semibold tracking-[0.14em] text-muted uppercase md:text-[16px]">
         Chosen by <span className="text-pink">5,000+</span> teams to run their SaaS stack
