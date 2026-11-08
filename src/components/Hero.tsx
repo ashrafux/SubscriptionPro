@@ -5,7 +5,7 @@ import { ChatGptMark, ZoomMark } from './Brand';
 /** White circular badge floating over the hero gradient. x is Figma px in the 1639px card, applied as a % so it scales with the card. */
 function Float({ x, y, size, children }: { x: number; y: number; size: number; children: ReactNode }) {
   return (
-    <div className="absolute" style={{ left: `${(x / 1639) * 100}%`, top: y }}>
+    <div className="absolute" style={{ left: `${(x / 1639) * 100}%`, top: `calc(${y}px + var(--float-shift, 0px))` }}>
       <div data-float className="flex items-center justify-center rounded-full bg-white" style={{ width: size, height: size }}>
         {children}
       </div>
@@ -29,7 +29,12 @@ export function Hero({ withHeader = false }: { withHeader?: boolean }) {
         </div>
 
         {/* Floating partner logos (wide screens only). The layer follows the card width but keeps ≥40px from each edge. */}
-        <div aria-hidden className="pointer-events-none absolute top-0 left-1/2 hidden h-full w-[min(1639px,calc(100%-80px))] -translate-x-1/2 xl:block">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute top-0 left-1/2 hidden h-full w-[min(1639px,calc(100%-80px))] -translate-x-1/2 xl:block"
+          // Home Two's copy starts 95px lower (225px vs 130px top padding), so the badges move down with it
+          style={withHeader ? ({ '--float-shift': '95px' } as React.CSSProperties) : undefined}
+        >
           <Float x={139} y={427} size={60}>
             <ZoomMark />
           </Float>
