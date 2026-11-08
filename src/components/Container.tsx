@@ -1,8 +1,12 @@
 import type { ReactNode } from 'react';
 
 /** Content column: 1496px max (fits a 1920 screen with the design's 212px side space), 20px gutters below that. */
-export function Container({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`mx-auto w-full max-w-[1536px] px-5 ${className}`}>{children}</div>;
+export function Container({ children, className = '', style }: { children: ReactNode; className?: string; style?: React.CSSProperties }) {
+  return (
+    <div className={`mx-auto w-full max-w-[1536px] px-5 ${className}`} style={style}>
+      {children}
+    </div>
+  );
 }
 
 export function Divider() {

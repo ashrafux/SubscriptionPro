@@ -22,10 +22,10 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
   useLayoutEffect(() => (root.current ? initAnimations(root.current) : undefined), []);
 
   return (
-    <div ref={root} className="overflow-x-clip">
-      <Header page={page} />
+    <div ref={root} className="relative overflow-x-clip">
+      <Header page={page} overlay={page === 'home-2'} />
       <main>
-        <Hero />
+        <Hero withHeader={page === 'home-2'} />
         <Intro />
         <Divider />
         <Stats />

@@ -38,7 +38,8 @@ const Chevron = ({ open }: { open: boolean }) => (
 
 type Menu = 'home' | 'products' | 'resources' | null;
 
-export function Header({ page = 'home-1' }: { page?: PageId }) {
+/** `overlay`: the header floats transparently inside the hero card (Home Two) instead of sitting on a white strip. */
+export function Header({ page = 'home-1', overlay = false }: { page?: PageId; overlay?: boolean }) {
   const current = pages.find((p) => p.id === page) ?? pages[0];
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
@@ -83,8 +84,12 @@ export function Header({ page = 'home-1' }: { page?: PageId }) {
   );
 
   return (
-    <header ref={headerRef} className="relative z-40 bg-white">
-      <Container className="relative flex h-[88px] items-center justify-between gap-6 lg:h-[105px]">
+    <header ref={headerRef} className={overlay ? 'absolute inset-x-0 top-0 z-40 px-5 pt-5' : 'relative z-40 bg-white'}>
+      <Container
+        className={`relative flex items-center justify-between gap-6 ${overlay ? 'mt-4 h-[48px] lg:mt-[30px] lg:h-[45px]' : 'h-[88px] lg:h-[105px]'}`}
+        // mega panels hang just below the menu row; the overlay row is shorter, so anchor them a bit lower
+        style={overlay ? ({ '--menu-top': 'calc(100% + 6px)' } as React.CSSProperties) : undefined}
+      >
         <div data-header-item>
           <Logo className="w-[180px] lg:w-[200px] xl:w-[246px]" />
         </div>
@@ -164,7 +169,7 @@ export function Header({ page = 'home-1' }: { page?: PageId }) {
             key={id}
             onMouseEnter={() => openMenu(id)}
             onMouseLeave={closeSoon}
-            className={`absolute top-[calc(100%-14px)] left-1/2 hidden w-[min(860px,calc(100%-40px))] -translate-x-1/2 pt-3 transition-[opacity,margin,visibility] duration-300 ease-out lg:block ${
+            className={`absolute top-[var(--menu-top,calc(100%-14px))] left-1/2 hidden w-[min(860px,calc(100%-40px))] -translate-x-1/2 pt-3 transition-[opacity,margin,visibility] duration-300 ease-out lg:block ${
               menu === id ? 'visible mt-0 opacity-100' : 'invisible -mt-2 opacity-0'
             }`}
           >
@@ -207,8 +212,8 @@ export function Header({ page = 'home-1' }: { page?: PageId }) {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <Container className="pb-4 lg:hidden">
-          <nav aria-label="Mobile" className="flex flex-col rounded-2xl border border-neutral-100 p-2 text-[18px] text-ink">
+        <Container className={`lg:hidden ${overlay ? 'pt-3' : 'pb-4'}`}>
+          <nav aria-label="Mobile" className="flex flex-col rounded-2xl border border-neutral-100 bg-white p-2 text-[18px] text-ink shadow-[0_20px_50px_-12px_rgba(20,20,43,0.25)]">
             <div>
               <button
                 type="button"

@@ -17,9 +17,10 @@ const roundImg = (src: string, alt: string, w: number, h = w) => (
   <img src={src} alt={alt} width={w} height={h} className="rounded-full object-cover" style={{ width: w, height: h }} />
 );
 
-export function Hero() {
+/** `withHeader`: Home Two — the card starts 20px from the top and the header floats inside it, so the copy starts lower. */
+export function Hero({ withHeader = false }: { withHeader?: boolean }) {
   return (
-    <section data-hero className="px-5">
+    <section data-hero className={`px-5 ${withHeader ? 'pt-5' : ''}`}>
       <div data-hero-card className="relative mx-auto max-w-[1880px] overflow-hidden rounded-[20px]">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <img src="/assets/hero/hero-bg.jpg" alt="" className="absolute inset-0 size-full object-cover" />
@@ -42,7 +43,7 @@ export function Hero() {
           <Float x={1446} y={592} size={60}>{roundImg('/assets/brands/microsoft365.png', 'Microsoft 365', 41.195, 45.315)}</Float>
         </div>
 
-        <div className="relative flex flex-col items-center px-5 pt-14 sm:pt-20 lg:pt-[130px]">
+        <div className={`relative flex flex-col items-center px-5 ${withHeader ? 'pt-[120px] sm:pt-[140px] lg:pt-[225px]' : 'pt-14 sm:pt-20 lg:pt-[130px]'}`}>
           <div className="flex max-w-[951px] flex-col items-center gap-8 text-center md:gap-14">
             <div className="relative isolate flex flex-col items-center gap-4 md:gap-7">
               {/* Soft light behind the copy so it stays readable over the darker parts of the gradient */}
