@@ -3,12 +3,14 @@ import { IntroOptions } from './IntroOptions';
 import { ApartOptions } from './ApartOptions';
 import { TestimonialOptions } from './TestimonialOptions';
 import { CalculatorOptions } from './CalculatorOptions';
+import { CtaOptions } from './CtaOptions';
 
 const groups = [
   { id: 'intro', title: '1M+ strip', sub: 'Quieter versions of the “One smart platform…” strip', C: IntroOptions },
   { id: 'apart', title: 'What Sets SubscriptionPro Apart', sub: 'Totally different layouts for the six features', C: ApartOptions },
   { id: 'calculator', title: 'Calculator', sub: 'Six new ways to show the recurring-savings calculator (all live)', C: CalculatorOptions },
   { id: 'testimonials', title: 'Testimonials', sub: 'Same blue background, new layouts', C: TestimonialOptions },
+  { id: 'cta', title: 'CTA', sub: 'Six totally different layouts for “Get the Best of SaaS…”', C: CtaOptions },
 ];
 
 export function Home2Options() {
