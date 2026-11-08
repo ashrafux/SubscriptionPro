@@ -65,8 +65,8 @@ export function Footer3() {
             </ul>
           </div>
 
-          <div data-anim="fade-up" data-delay="0.1" className="rounded-[22px] bg-white/[0.06] p-6 ring-1 ring-white/10 md:p-8">
-            <p className="font-display text-[22px] leading-[1.3] font-bold md:text-[26px]">Get the best SaaS deals in your inbox</p>
+          <div data-anim="fade-up" data-delay="0.1" className="w-full max-w-[480px] rounded-[22px] bg-white/[0.06] p-6 ring-1 ring-white/10 md:p-7 lg:justify-self-end">
+            <p className="font-display text-[20px] leading-[1.3] font-bold md:text-[22px]">Get the best SaaS deals in your inbox</p>
             <p className="mt-2 text-[15px] text-white/60">One short email a month. No spam, unsubscribe any time.</p>
             <form
               className="mt-5 flex h-[58px] w-full items-center rounded-full bg-white p-[5px] pl-5"
