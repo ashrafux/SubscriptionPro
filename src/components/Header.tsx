@@ -3,6 +3,7 @@ import { ChatGptMark } from './Brand';
 import { Container } from './Container';
 import { Logo } from './Logo';
 import { RollText } from './Roll';
+import { pages, type PageId } from '../pages';
 
 
 const logo = (src: string) => <img src={src} alt="" className="size-6 object-contain" />;
@@ -35,9 +36,10 @@ const Chevron = ({ open }: { open: boolean }) => (
   </svg>
 );
 
-type Menu = 'products' | 'resources' | null;
+type Menu = 'home' | 'products' | 'resources' | null;
 
-export function Header() {
+export function Header({ page = 'home-1' }: { page?: PageId }) {
+  const current = pages.find((p) => p.id === page) ?? pages[0];
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [menu, setMenu] = useState<Menu>(null);
@@ -84,10 +86,40 @@ export function Header() {
     <header ref={headerRef} className="relative z-40 bg-white">
       <Container className="relative flex h-[88px] items-center justify-between gap-6 lg:h-[105px]">
         <div data-header-item>
-          <Logo className="w-[180px] lg:w-[246px]" />
+          <Logo className="w-[180px] lg:w-[200px] xl:w-[246px]" />
         </div>
 
-        <nav data-header-item aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-[30px] text-[18px] leading-[1.3] text-ink lg:flex">
+        <nav data-header-item aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-[22px] text-[16px] leading-[1.3] whitespace-nowrap text-ink lg:flex xl:gap-[30px] xl:text-[18px]">
+          {/* Home One / Home Two switcher */}
+          <div className="relative">
+            {trigger('home', current.label)}
+            <div
+              onMouseEnter={() => openMenu('home')}
+              onMouseLeave={closeSoon}
+              className={`absolute top-full left-1/2 w-48 -translate-x-1/2 pt-4 transition-[opacity,margin,visibility] duration-200 ${
+                menu === 'home' ? 'visible mt-0 opacity-100' : 'invisible -mt-1 opacity-0'
+              }`}
+            >
+              <ul className="rounded-2xl border border-neutral-100 bg-white p-2 text-[16px] shadow-[0_30px_60px_-16px_rgba(20,20,43,0.3),0_10px_24px_-8px_rgba(20,20,43,0.12)]">
+                {pages.map((p) => (
+                  <li key={p.id}>
+                    <a
+                      href={p.href}
+                      aria-current={p.id === page ? 'page' : undefined}
+                      className={`flex items-center justify-between rounded-xl px-3 py-2.5 transition-colors hover:bg-[#fbf3f8] ${p.id === page ? 'font-semibold text-black' : 'text-ink'}`}
+                    >
+                      {p.label}
+                      {p.id === page && (
+                        <svg viewBox="0 0 24 24" className="size-4 text-pink" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                          <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
           {trigger('products', 'Products')}
           <a href="#submit" className="transition-colors hover:text-black" onMouseEnter={() => setMenu(null)}>
             Submit Your Product
@@ -177,6 +209,31 @@ export function Header() {
       {mobileOpen && (
         <Container className="pb-4 lg:hidden">
           <nav aria-label="Mobile" className="flex flex-col rounded-2xl border border-neutral-100 p-2 text-[18px] text-ink">
+            <div>
+              <button
+                type="button"
+                className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 hover:bg-neutral-50"
+                aria-expanded={mobileSection === 'home'}
+                onClick={() => setMobileSection((v) => (v === 'home' ? null : 'home'))}
+              >
+                {current.label}
+                <Chevron open={mobileSection === 'home'} />
+              </button>
+              {mobileSection === 'home' && (
+                <div className="mb-1 flex flex-col gap-1 px-1">
+                  {pages.map((p) => (
+                    <a
+                      key={p.id}
+                      href={p.href}
+                      aria-current={p.id === page ? 'page' : undefined}
+                      className={`rounded-xl px-3 py-2 text-[16px] hover:bg-[#fbf3f8] ${p.id === page ? 'bg-[#fbf3f8] font-semibold text-black' : ''}`}
+                    >
+                      {p.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
             {(
               [
                 ['products', 'Products', categories, '#products'],

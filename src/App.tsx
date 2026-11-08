@@ -14,14 +14,16 @@ import { Calculator } from './components/Calculator';
 import { Faq } from './components/Faq';
 import { Cta } from './components/Cta';
 import { Footer } from './components/Footer';
+import type { PageId } from './pages';
 
-export default function App() {
+/** Home One and Home Two share this layout; Home Two's section changes branch on `page`. */
+export default function App({ page = 'home-1' }: { page?: PageId }) {
   const root = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => (root.current ? initAnimations(root.current) : undefined), []);
 
   return (
     <div ref={root} className="overflow-x-clip">
-      <Header />
+      <Header page={page} />
       <main>
         <Hero />
         <Intro />
