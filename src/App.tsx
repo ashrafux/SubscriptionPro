@@ -17,6 +17,7 @@ import { Trusted } from './components/Trusted';
 import { Calculator } from './components/Calculator';
 import { Faq } from './components/Faq';
 import { Cta } from './components/Cta';
+import { CtaOrbit } from './components/CtaOrbit';
 import { Footer } from './components/Footer';
 import type { PageId } from './pages';
 
@@ -44,7 +45,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
         <Calculator />
         <Divider />
         <Faq />
-        <Cta />
+        {page === 'home-2' ? <CtaOrbit /> : <Cta />}
       </main>
       <Footer />
     </div>

@@ -6,18 +6,18 @@ import { LogoMark } from './Logo';
 
 const img = (src: string, alt: string, w = 64, h = w) => <img src={src} alt={alt} style={{ width: w, height: h }} className="object-contain" />;
 
-const left: ReactNode[][] = [
+export const left: ReactNode[][] = [
   [<img key="c" src="/assets/products/clickup.svg" alt="ClickUp" width={52} height={62} />, img('/assets/brands/microsoft365.png', 'Microsoft 365', 60, 66), img('/assets/brands/google.png', 'Google', 62)],
   [img('/assets/brands/canva.png', 'Canva', 66), <ChatGptMark key="g" size={64} />, img('/assets/brands/adobe-cc.png', 'Adobe', 62, 60)],
   [img('/assets/brands/notion.png', 'Notion', 58), <ZoomMark key="z" size={64} />],
 ];
-const right: ReactNode[][] = [
+export const right: ReactNode[][] = [
   [img('/assets/cta/d-app.png', 'App', 64), img('/assets/cta/bubble.png', 'App', 92)],
   [img('/assets/cta/stripes.png', 'App', 120, 60), img('/assets/cta/dropbox.png', 'Dropbox', 61, 57), img('/assets/cta/chat-green.png', 'App', 62)],
   [img('/assets/cta/filmora.png', 'Filmora', 58), img('/assets/cta/u-app.png', 'App', 112, 63), img('/assets/cta/check.png', 'App', 84, 59)],
 ];
 
-function Tile({ children, size = 130 }: { children: ReactNode; size?: number }) {
+export function Tile({ children, size = 130 }: { children: ReactNode; size?: number }) {
   const s = size / 130;
   return (
     <div
@@ -41,7 +41,7 @@ function Column({ tiles, offset }: { tiles: ReactNode[]; offset: number }) {
   );
 }
 
-function Hub({ size = 173 }: { size?: number }) {
+export function Hub({ size = 173 }: { size?: number }) {
   return (
     <div
       className="flex shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_35%_30%,#f7a8d6,#e15aab_45%,#f1b13b_100%)] shadow-[0_18px_40px_rgba(225,90,171,0.35)]"
