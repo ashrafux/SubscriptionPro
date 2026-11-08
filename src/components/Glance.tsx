@@ -101,7 +101,7 @@ export const tabs: Tab[] = [
 const stateOf = (i: number, active: number) => (i === active ? 'active' : i < active ? 'past' : 'next');
 
 /** `centered`: Home Two stacks the heading and description in the middle. */
-export function Glance({ centered = false, compact = false }: { centered?: boolean; compact?: boolean }) {
+export function Glance({ centered = false, compact = false, kicker = true }: { centered?: boolean; compact?: boolean; kicker?: boolean }) {
   const [tab, setTab] = useState(0);
 
   return (
@@ -155,8 +155,8 @@ export function Glance({ centered = false, compact = false }: { centered?: boole
               const c = shortCopy[t.label];
               return compact && c ? (
               <div key={t.label} className="apart-copy col-start-1 row-start-1 self-center" data-state={stateOf(i, tab)} aria-hidden={i !== tab}>
-                <span className="font-poppins text-[13px] font-semibold tracking-[0.12em] text-[#6d8a3a] uppercase">{t.label}</span>
-                <h3 className="mt-3 max-w-[440px] text-[26px] leading-[1.25] font-bold md:text-[32px]">{c.title}</h3>
+                {kicker && <span className="font-poppins text-[13px] font-semibold tracking-[0.12em] text-[#6d8a3a] uppercase">{t.label}</span>}
+                <h3 className={`${kicker ? 'mt-3' : ''} max-w-[440px] text-[26px] leading-[1.25] font-bold md:text-[32px]`}>{c.title}</h3>
                 <p className="mt-4 max-w-[400px] font-lato text-[17px] leading-[1.5] text-[#6b6b6b] md:text-[18px]">{c.intro}</p>
                 <ul className="mt-7 flex flex-col gap-3.5">
                   {c.points.map(([k, rest]) => (

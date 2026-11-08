@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Glance, tabs } from './Glance';
+import { Glance, shortCopy, tabs } from './Glance';
 import { PillButton } from './PillButton';
 import { CheckCircle } from './Icons';
 import { ScaledScreen } from './apart/Shell';
@@ -25,7 +25,7 @@ export function GlanceScroll() {
     mq.addEventListener('change', on);
     return () => mq.removeEventListener('change', on);
   }, []);
-  return pinnable ? <PinnedGlance /> : <Glance centered />;
+  return pinnable ? <PinnedGlance /> : <Glance centered compact kicker={false} />;
 }
 
 function PinnedGlance() {
@@ -180,16 +180,16 @@ function PinnedGlance() {
                     <div key={t.label} data-slide aria-hidden={i !== active} className="grid h-full w-full shrink-0 grid-cols-[607fr_861fr] gap-7">
                       <div className="overflow-hidden rounded-[20px] bg-stat-lime">
                         <div data-copy className="flex h-full flex-col justify-center px-[clamp(32px,4vw,60px)] py-[clamp(24px,4.5vh,58px)]">
-                          <span data-line className="font-poppins text-[13px] font-semibold tracking-[0.12em] text-[#6d8a3a] uppercase">
-                            {String(i + 1).padStart(2, '0')} / {String(tabs.length).padStart(2, '0')} · {t.label}
-                          </span>
-                          <h3 data-line className="mt-3 max-w-[468px] text-[min(32px,3.6vh)] leading-[1.3] font-bold">{t.title}</h3>
-                          <p data-line className="mt-[min(24px,2.4vh)] max-w-[422px] font-lato text-[min(18px,2.1vh)] leading-[1.45] text-[#6b6b6b]">{t.intro}</p>
-                          <ul className="mt-[min(28px,2.8vh)] flex max-w-[422px] flex-col gap-[min(18px,1.8vh)]">
-                            {t.points.map((p) => (
-                              <li key={p} data-line className="flex gap-3 font-lato text-[min(18px,2.1vh)] leading-[1.4] text-[#3c3c3c]">
-                                <CheckCircle className="mt-[3px] size-5 shrink-0 text-black" />
-                                {p}
+                          {/* same short copy as Home Three's Glance (title, one line, three key points), without the kicker */}
+                          <h3 data-line className="max-w-[440px] text-[min(32px,3.8vh)] leading-[1.25] font-bold">{shortCopy[t.label].title}</h3>
+                          <p data-line className="mt-[min(16px,1.8vh)] max-w-[400px] font-lato text-[min(18px,2.2vh)] leading-[1.5] text-[#6b6b6b]">{shortCopy[t.label].intro}</p>
+                          <ul className="mt-[min(28px,3vh)] flex flex-col gap-[min(14px,1.5vh)]">
+                            {shortCopy[t.label].points.map(([k, rest]) => (
+                              <li key={k} data-line className="flex items-center gap-3 rounded-[14px] bg-white/70 px-4 py-[min(12px,1.4vh)] font-lato text-[min(18px,2.2vh)] text-[#3c3c3c]">
+                                <CheckCircle className="size-5 shrink-0 text-black" />
+                                <span>
+                                  <b className="font-bold text-black">{k}</b> {rest}
+                                </span>
                               </li>
                             ))}
                           </ul>
