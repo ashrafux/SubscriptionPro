@@ -101,7 +101,7 @@ export const tabs: Tab[] = [
 const stateOf = (i: number, active: number) => (i === active ? 'active' : i < active ? 'past' : 'next');
 
 /** `centered`: Home Two stacks the heading and description in the middle. */
-export function Glance({ centered = false, compact = false, kicker = true }: { centered?: boolean; compact?: boolean; kicker?: boolean }) {
+export function Glance({ centered = false, compact = false, kicker = true, neutral = false }: { centered?: boolean; compact?: boolean; kicker?: boolean; neutral?: boolean }) {
   const [tab, setTab] = useState(0);
 
   return (
@@ -150,7 +150,7 @@ export function Glance({ centered = false, compact = false, kicker = true }: { c
 
         <div className="mt-8 grid gap-5 md:mt-[60px] md:gap-7 xl:grid-cols-[607fr_861fr]">
           {/* left: copy for the active tab (all stacked in one cell, so the card keeps the tallest height) */}
-          <div data-anim="slide-left" className="grid rounded-[20px] bg-stat-lime px-6 py-9 sm:px-10 md:py-12 xl:px-[60px] xl:py-[58px]">
+          <div data-anim="slide-left" className={`grid rounded-[20px] ${neutral ? 'bg-[#f4f4f6]' : 'bg-stat-lime'} px-6 py-9 sm:px-10 md:py-12 xl:px-[60px] xl:py-[58px]`}>
             {tabs.map((t, i) => {
               const c = shortCopy[t.label];
               return compact && c ? (
@@ -160,7 +160,7 @@ export function Glance({ centered = false, compact = false, kicker = true }: { c
                 <p className="mt-4 max-w-[400px] font-lato text-[17px] leading-[1.5] text-[#6b6b6b] md:text-[18px]">{c.intro}</p>
                 <ul className="mt-7 flex flex-col gap-3.5">
                   {c.points.map(([k, rest]) => (
-                    <li key={k} className="flex items-center gap-3 rounded-[14px] bg-white/70 px-4 py-3 font-lato text-[17px] text-[#3c3c3c] md:text-[18px]">
+                    <li key={k} className={`flex items-center gap-3 rounded-[14px] px-4 py-3 font-lato ${neutral ? 'bg-white ring-1 ring-black/[0.04]' : 'bg-white/70'} text-[17px] text-[#3c3c3c] md:text-[18px]`}>
                       <CheckCircle className="size-5 shrink-0 text-black" />
                       <span>
                         <b className="font-bold text-black">{k}</b> {rest}
