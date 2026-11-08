@@ -8,7 +8,9 @@ import { Divider } from './components/Container';
 import { Stats } from './components/Stats';
 import { Partners } from './components/Partners';
 import { Apart } from './components/Apart';
+import { ApartAccordion } from './components/ApartAccordion';
 import { Testimonials } from './components/Testimonials';
+import { TestimonialsPortrait } from './components/TestimonialsPortrait';
 import { Glance } from './components/Glance';
 import { GlanceScroll } from './components/GlanceScroll';
 import { Trusted } from './components/Trusted';
@@ -33,8 +35,8 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
         <Stats />
         <Divider />
         <Partners />
-        <Apart />
-        <Testimonials />
+        {page === 'home-2' ? <ApartAccordion /> : <Apart />}
+        {page === 'home-2' ? <TestimonialsPortrait /> : <Testimonials />}
         {page === 'home-2' ? <GlanceScroll /> : <Glance />}
         <Divider />
         <Trusted />
