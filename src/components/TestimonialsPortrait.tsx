@@ -1,7 +1,7 @@
 import { TiltBadge } from './Badge';
 import { Band, BandInner } from './Container';
 
-/* Home Two testimonials: same royal-blue grid band, four portrait cards (photo on top, product badge, quote). */
+/* Home Two testimonials: rich-black band with logo-colour glows, four portrait cards (photo on top, product badge, quote). */
 
 type T = { quote: string; name: string; role: string; logo: string; photo: string; pos?: string };
 
@@ -12,16 +12,23 @@ const items: T[] = [
   { quote: 'Buying Adobe seats for a 40-person studio used to take a week of back-and-forth. Now it is two clicks.', name: 'Priya Raman', role: 'Studio Manager, Fold', logo: '/assets/brands/adobe-cc.png', photo: '/assets/testimonials/priya.jpg', pos: '50% 30%' },
 ];
 
-const grid = {
-  backgroundImage:
-    'linear-gradient(rgba(255,255,255,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.09) 1px, transparent 1px)',
-  backgroundSize: '92px 92px',
-  backgroundPosition: '-34px -22px',
+// Rich black with soft glows in the logo's colours (blue, pink, orange) over a faint grid.
+const bg = {
+  backgroundColor: '#0b0b12',
+  backgroundImage: [
+    'radial-gradient(45% 55% at 8% 0%, rgba(225,90,171,0.28), transparent 70%)',
+    'radial-gradient(40% 50% at 95% 8%, rgba(99,135,255,0.24), transparent 70%)',
+    'radial-gradient(50% 45% at 85% 105%, rgba(245,166,91,0.18), transparent 70%)',
+    'linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px)',
+    'linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)',
+  ].join(', '),
+  backgroundSize: '100% 100%, 100% 100%, 100% 100%, 92px 92px, 92px 92px',
+  backgroundPosition: '0 0, 0 0, 0 0, -34px -22px, -34px -22px',
 };
 
 export function TestimonialsPortrait() {
   return (
-    <Band outer="mt-5" className="bg-testimonial py-16 md:py-24 xl:pt-[150px] xl:pb-[170px]" style={grid}>
+    <Band outer="mt-5" className="py-16 md:py-24 xl:pt-[150px] xl:pb-[170px]" style={bg}>
       <BandInner>
         <div className="flex flex-col items-center text-center">
           <span data-anim="scale-in">
