@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Band, BandInner } from '../Container';
-import { richBlack } from '../TestimonialsPortrait';
 
 /* Testimonial slider (originally built for the review sheet, rows 12 + 23; Home Two uses the dark mode):
    - new, softer background instead of the royal-blue grid
@@ -42,7 +41,7 @@ function Card({ t, dark }: { t: T; dark: boolean }) {
         <blockquote className={`mt-6 text-left text-[16.5px] leading-[1.7] md:text-[17px] ${dark ? 'text-pretty text-white/80' : 'text-[#3c4650] md:text-justify'}`}>“{t.quote}”</blockquote>
       </div>
       {/* highlighted customer block */}
-      <figcaption className={`flex items-center gap-4 border-t px-7 py-5 md:px-8 ${dark ? 'border-white/10 bg-[linear-gradient(90deg,rgba(99,135,255,0.12),rgba(225,90,171,0.12))]' : 'border-[#eef0f6] bg-[linear-gradient(90deg,#f6f4ff,#fdf3f9)]'}`}>
+      <figcaption className={`flex items-center gap-4 border-t px-7 py-5 md:px-8 ${dark ? 'border-white/10 bg-[#1c1c28]' : 'border-[#eef0f6] bg-[linear-gradient(90deg,#f6f4ff,#fdf3f9)]'}`}>
         <img src={t.photo} alt="" className={`size-[54px] shrink-0 rounded-full object-cover ${dark ? 'ring-[#15151f]' : 'ring-white'} ring-[3px] shadow-[0_4px_12px_rgba(30,40,120,0.18)]`} />
         <span className="min-w-0 flex-1">
           <span className={`block font-poppins text-[17px] font-semibold ${dark ? 'text-white' : 'text-[#14141f]'}`}>{t.name}</span>
@@ -106,7 +105,7 @@ export function Testimonials3({ dark = false }: { dark?: boolean }) {
       className={`py-16 md:py-24 xl:pt-[130px] xl:pb-[120px] ${dark ? '' : 'bg-[#eef1ff]'}`}
       style={
         dark
-          ? richBlack
+          ? { backgroundColor: '#0b0b12' } // solid rich black, no glows or grid
           : {
               backgroundImage:
                 'radial-gradient(60% 50% at 0% 0%, rgba(225,90,171,0.12), transparent 70%), radial-gradient(55% 60% at 100% 100%, rgba(49,72,234,0.14), transparent 70%)',
@@ -149,30 +148,52 @@ export function Testimonials3({ dark = false }: { dark?: boolean }) {
             </div>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-6 md:mt-10">
-            <button type="button" onClick={() => go(-1)} aria-label="Previous testimonials" className={`flex size-12 items-center justify-center rounded-full transition ${dark ? 'bg-white/10 text-white ring-1 ring-white/15 hover:bg-white hover:text-[#14141f]' : 'bg-white text-[#14141f] shadow-[0_6px_18px_-8px_rgba(30,40,120,0.35)] hover:bg-[#14141f] hover:text-white'}`}>
-              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M15 6l-6 6 6 6" />
-              </svg>
-            </button>
-            <div className="flex gap-2">
-              {Array.from({ length: pages }, (_, i) => (
+          {dark ? (
+            /* dark (Home Two): two square outline arrows only, no dots */
+            <div className="mt-8 flex items-center justify-center gap-3 md:mt-10">
+              {[
+                { d: -1, label: 'Previous testimonials', path: 'M19 12H5M11 6l-6 6 6 6' },
+                { d: 1, label: 'Next testimonials', path: 'M5 12h14M13 6l6 6-6 6' },
+              ].map((b) => (
                 <button
-                  key={i}
+                  key={b.d}
                   type="button"
-                  aria-label={`Page ${i + 1}`}
-                  aria-current={i === page}
-                  onClick={() => setPage(i)}
-                  className={`h-2.5 rounded-full transition-all duration-500 ${i === page ? (dark ? 'w-8 bg-pink' : 'w-8 bg-royal') : dark ? 'w-2.5 bg-white/25 hover:bg-white/45' : 'w-2.5 bg-[#c9cfee] hover:bg-[#a9b2e6]'}`}
-                />
+                  onClick={() => go(b.d)}
+                  aria-label={b.label}
+                  className="flex h-12 w-16 items-center justify-center rounded-[14px] border border-white/20 bg-[#15151f] text-white transition duration-300 hover:border-white hover:bg-white hover:text-[#0b0b12]"
+                >
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d={b.path} />
+                  </svg>
+                </button>
               ))}
             </div>
-            <button type="button" onClick={() => go(1)} aria-label="Next testimonials" className={`flex size-12 items-center justify-center rounded-full transition ${dark ? 'bg-white text-[#14141f] hover:bg-pink hover:text-white' : 'bg-[#14141f] text-white shadow-[0_6px_18px_-8px_rgba(30,40,120,0.35)] hover:bg-royal'}`}>
-              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M9 6l6 6-6 6" />
-              </svg>
-            </button>
-          </div>
+          ) : (
+          <div className="mt-8 flex items-center justify-center gap-6 md:mt-10">
+              <button type="button" onClick={() => go(-1)} aria-label="Previous testimonials" className={`flex size-12 items-center justify-center rounded-full transition ${dark ? 'bg-white/10 text-white ring-1 ring-white/15 hover:bg-white hover:text-[#14141f]' : 'bg-white text-[#14141f] shadow-[0_6px_18px_-8px_rgba(30,40,120,0.35)] hover:bg-[#14141f] hover:text-white'}`}>
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M15 6l-6 6 6 6" />
+                </svg>
+              </button>
+              <div className="flex gap-2">
+                {Array.from({ length: pages }, (_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    aria-label={`Page ${i + 1}`}
+                    aria-current={i === page}
+                    onClick={() => setPage(i)}
+                    className={`h-2.5 rounded-full transition-all duration-500 ${i === page ? (dark ? 'w-8 bg-pink' : 'w-8 bg-royal') : dark ? 'w-2.5 bg-white/25 hover:bg-white/45' : 'w-2.5 bg-[#c9cfee] hover:bg-[#a9b2e6]'}`}
+                  />
+                ))}
+              </div>
+              <button type="button" onClick={() => go(1)} aria-label="Next testimonials" className={`flex size-12 items-center justify-center rounded-full transition ${dark ? 'bg-white text-[#14141f] hover:bg-pink hover:text-white' : 'bg-[#14141f] text-white shadow-[0_6px_18px_-8px_rgba(30,40,120,0.35)] hover:bg-royal'}`}>
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M9 6l6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
       </BandInner>
     </Band>

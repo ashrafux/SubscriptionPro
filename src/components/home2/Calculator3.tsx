@@ -96,7 +96,7 @@ export function Calculator3({ plain = false }: { plain?: boolean }) {
             {rows.map((r) => {
               const y = yearly(r);
               return (
-                <li key={r.id} className={`grid grid-cols-2 items-center gap-3 rounded-[20px] p-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.8fr)_44px] lg:gap-4 ${plain ? 'bg-white/45' : 'bg-[#f8f9fc]'}`}>
+                <li key={r.id} className={`grid grid-cols-2 items-center gap-3 rounded-[20px] p-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.8fr)_44px] lg:gap-4 ${plain ? 'bg-white' : 'bg-[#f8f9fc]'}`}>
                   <label className="relative col-span-2 flex h-[52px] items-center gap-3 rounded-full border border-[#e6e8ef] bg-white pr-10 pl-3 lg:col-span-1">
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f5f6fa]">{logoOf(r.product)}</span>
                     <select
