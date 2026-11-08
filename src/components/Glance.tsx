@@ -7,7 +7,7 @@ import { GlanceBilling, GlanceDashboard, GlanceDeposit, GlanceIntegrations, Glan
 type Tab = { label: string; title: string; intro: string; points: string[]; bg: string; View: ComponentType };
 
 // Backgrounds: abstract gradients generated with Higgsfield (GPT Image 2.5), one per tab.
-const tabs: Tab[] = [
+export const tabs: Tab[] = [
   {
     label: 'Dashboard',
     title: 'Stay in Control with Our Free SaaS Tool Dashboard',

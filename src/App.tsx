@@ -9,6 +9,7 @@ import { Partners } from './components/Partners';
 import { Apart } from './components/Apart';
 import { Testimonials } from './components/Testimonials';
 import { Glance } from './components/Glance';
+import { GlanceScroll } from './components/GlanceScroll';
 import { Trusted } from './components/Trusted';
 import { Calculator } from './components/Calculator';
 import { Faq } from './components/Faq';
@@ -33,7 +34,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
         <Partners />
         <Apart />
         <Testimonials />
-        <Glance />
+        {page === 'home-2' ? <GlanceScroll /> : <Glance />}
         <Divider />
         <Trusted />
         <Divider />
