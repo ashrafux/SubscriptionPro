@@ -89,7 +89,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
             {page === 'home-2' ? <TestimonialsPortrait /> : <Testimonials />}
             {page === 'home-2' ? <GlanceScroll /> : <Glance />}
             <Divider />
-            <Trusted centered={page === 'home-2'} />
+            <Trusted centered={page === 'home-2'} pinkCta={page === 'home-2'} />
             <Divider />
             <Calculator />
             <Divider />
