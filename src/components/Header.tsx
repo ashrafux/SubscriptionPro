@@ -40,7 +40,7 @@ type Menu = 'home' | 'products' | 'resources' | null;
 
 /**
  * `overlay`: the header floats transparently inside the hero card (Home Two) instead of sitting on a white strip.
- * `sticky`: Home Three — stays on top while scrolling, turns frosted and compact once the page moves, menu items get pill hovers.
+ * `sticky`: optional (no page uses it right now) — stays on top while scrolling, turns frosted and compact once the page moves, menu items get pill hovers.
  */
 export function Header({ page = 'home-1', overlay = false, sticky = false }: { page?: PageId; overlay?: boolean; sticky?: boolean }) {
   const current = pages.find((p) => p.id === page) ?? pages[0];

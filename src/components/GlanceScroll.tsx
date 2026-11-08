@@ -180,7 +180,7 @@ function PinnedGlance() {
                     <div key={t.label} data-slide aria-hidden={i !== active} className="grid h-full w-full shrink-0 grid-cols-[607fr_861fr] gap-7">
                       <div className="overflow-hidden rounded-[20px] bg-[#f4f4f6]">
                         <div data-copy className="flex h-full flex-col justify-center px-[clamp(32px,4vw,60px)] py-[clamp(24px,4.5vh,58px)]">
-                          {/* same short copy as Home Three's Glance (title, one line, three key points), without the kicker */}
+                          {/* short copy from Glance's `shortCopy` (title, one line, three key points), without the kicker */}
                           <h3 data-line className="max-w-[440px] text-[min(32px,3.8vh)] leading-[1.25] font-bold">{shortCopy[t.label].title}</h3>
                           <p data-line className="mt-[min(16px,1.8vh)] max-w-[400px] font-lato text-[min(18px,2.2vh)] leading-[1.5] text-[#6b6b6b]">{shortCopy[t.label].intro}</p>
                           <ul className="mt-[min(28px,3vh)] flex flex-col gap-[min(14px,1.5vh)]">

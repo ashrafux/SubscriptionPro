@@ -3,7 +3,7 @@ import { Band, BandInner } from '../Container';
 import { Logo } from '../Logo';
 import { RollText } from '../Roll';
 
-/* Home Three footer (review row 18): cleaner structure — brand + social icons and the newsletter on top,
+/* Home Two footer (originally built for the review sheet, row 18): cleaner structure — brand + social icons and the newsletter on top,
    link columns in the middle, a legal bar at the bottom, and a calm gradient wordmark instead of the tag toy. */
 
 const columns = [

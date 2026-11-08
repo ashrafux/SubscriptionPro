@@ -13,7 +13,7 @@ const items: T[] = [
 ];
 
 // Rich black with soft glows in the logo's colours (blue, pink, orange) over a faint grid.
-const bg = {
+export const richBlack = {
   backgroundColor: '#0b0b12',
   backgroundImage: [
     'radial-gradient(45% 55% at 8% 0%, rgba(225,90,171,0.28), transparent 70%)',
@@ -28,7 +28,7 @@ const bg = {
 
 export function TestimonialsPortrait() {
   return (
-    <Band outer="mt-5" className="py-16 md:py-24 xl:pt-[150px] xl:pb-[170px]" style={bg}>
+    <Band outer="mt-5" className="py-16 md:py-24 xl:pt-[150px] xl:pb-[170px]" style={richBlack}>
       <BandInner>
         <div className="flex flex-col items-center text-center">
           <span data-anim="scale-in">

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { TiltBadge } from '../Badge';
 import { ChatGptMark, ZoomMark } from '../Brand';
 
-/* Home Three calculator (review rows 15 + 22): cleaner UI, product logos in every row, a Monthly/Yearly toggle,
+/* Home Two calculator (originally built for the review sheet, rows 15 + 22): cleaner UI, product logos in every row, a Monthly/Yearly toggle,
    totals update live (no separate Calculate step), no purchase button, and the total savings centred underneath. */
 
 const DISCOUNT = 0.1;
@@ -80,7 +80,8 @@ export function Calculator3({ plain = false }: { plain?: boolean }) {
       </div>
 
       <div data-anim="fade-up" className={`mx-auto mt-10 max-w-[1180px] overflow-hidden rounded-[28px] border border-[#eceef4] bg-white md:mt-14 ${plain ? '' : 'shadow-[0_40px_80px_-50px_rgba(20,30,90,0.45)]'}`}>
-        <div className="p-4 sm:p-6 xl:p-8">
+        {/* `plain` (Home Two): the list area uses Home One's calculator blue */}
+        <div className={`p-4 sm:p-6 xl:p-8 ${plain ? 'bg-calc' : ''}`}>
           {/* column labels (desktop) */}
           <div className="hidden grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.8fr)_44px] gap-4 px-4 pb-3 lg:grid">
             <span className={label}>Product</span>
@@ -95,7 +96,7 @@ export function Calculator3({ plain = false }: { plain?: boolean }) {
             {rows.map((r) => {
               const y = yearly(r);
               return (
-                <li key={r.id} className="grid grid-cols-2 items-center gap-3 rounded-[20px] bg-[#f8f9fc] p-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.8fr)_44px] lg:gap-4">
+                <li key={r.id} className={`grid grid-cols-2 items-center gap-3 rounded-[20px] p-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.8fr)_44px] lg:gap-4 ${plain ? 'bg-white/45' : 'bg-[#f8f9fc]'}`}>
                   <label className="relative col-span-2 flex h-[52px] items-center gap-3 rounded-full border border-[#e6e8ef] bg-white pr-10 pl-3 lg:col-span-1">
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f5f6fa]">{logoOf(r.product)}</span>
                     <select

@@ -6,7 +6,7 @@ import { GlanceBilling, GlanceDashboard, GlanceDeposit, GlanceIntegrations, Glan
 
 type Tab = { label: string; title: string; intro: string; points: string[]; bg: string; View: ComponentType };
 
-/** Home Three: shorter featured copy (review row 13) — a short title, one line, three key points with the keyword first. */
+/** Shorter featured copy (Home Two) — a short title, one line, three key points with the keyword first. */
 export const shortCopy: Record<string, { title: string; intro: string; points: [string, string][] }> = {
   Dashboard: { title: 'Your whole SaaS stack, one dashboard', intro: 'See every tool you pay for in one place.', points: [['Renewal dates', 'and costs at a glance'], ['Alerts', 'before any surprise charge'], ['Live spend', 'for smarter budgets']] },
   Products: { title: '100+ tools at partner prices', intro: 'Official licenses, bought in a couple of clicks.', points: [['Compare plans', 'side by side'], ['Monthly or yearly', 'for one seat or a team'], ['Up to 40% less', 'than buying direct']] },

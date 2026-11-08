@@ -23,7 +23,7 @@ const items = [
 ];
 
 /** `centered`: Home Two centres the heading with a two-line description under it and uses a secondary pill button. */
-/** `pinkCta`: Home Three — "See the Clients" in the brand pink so it reads as clickable (review row 14). */
+/** `pinkCta`: Home Two — "See the Clients" in the brand pink so it reads as clickable (review row 14). */
 export function Trusted({ centered = false, pinkCta = false }: { centered?: boolean; pinkCta?: boolean }) {
   return (
     <section className="px-5 py-16 md:py-24 xl:pt-[144px] xl:pb-[192px]">

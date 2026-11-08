@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-/* Home Three: animated client-logo strip right after the products (review row 20).
+/* Home Two: animated client-logo strip after the Trusted section.
    Placeholder wordmarks for fictional companies — swap in real client logos (with permission) before launch. */
 
 const S = (d: ReactNode) => (
