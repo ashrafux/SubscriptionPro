@@ -51,7 +51,7 @@ export function Footer3() {
   const [sent, setSent] = useState(false);
 
   return (
-    <Band as="footer" outer="mt-5 pb-5" className="bg-forest text-white">
+    <Band as="footer" outer="mt-5 pb-5" className="bg-black text-white">
       <BandInner className="pt-16 max-[1595px]:px-[30px] md:pt-20 xl:pt-[100px]">
         {/* brand + socials | newsletter */}
         <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
