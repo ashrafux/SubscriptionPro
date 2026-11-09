@@ -18,6 +18,7 @@ import { Cta } from './components/Cta';
 import { CtaOrbit } from './components/CtaOrbit';
 import { Footer } from './components/Footer';
 import { ClientLogos } from './components/home2/ClientLogos';
+import { BackToTop } from './components/home2/BackToTop';
 import { Testimonials3 } from './components/home2/Testimonials3';
 import { Calculator3 } from './components/home2/Calculator3';
 import { Footer3 } from './components/home2/Footer3';
@@ -50,6 +51,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
         {page === 'home-2' ? <CtaOrbit /> : <Cta />}
       </main>
       {page === 'home-2' ? <Footer3 /> : <Footer />}
+      {page === 'home-2' && <BackToTop />}
     </div>
   );
 }
