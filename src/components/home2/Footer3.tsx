@@ -4,14 +4,24 @@ import { Logo } from '../Logo';
 import { RollText } from '../Roll';
 
 /* Home Two footer (originally built for the review sheet, row 18): cleaner structure — brand + social icons and the newsletter on top,
-   link columns in the middle, a legal bar at the bottom, and a calm gradient wordmark instead of the tag toy. */
+   menu, offices and contact in the middle, the copyright at the bottom, and a calm gradient wordmark instead of the tag toy. */
 
 const columns = [
-  { title: 'Company', links: ['About', 'Blog', 'Career', 'Clients', 'Affiliate Partner'] },
-  { title: 'Quick Links', links: ['Testimonials', 'Refund Policy', 'Deals', 'Contact Us', 'Submit Your Product'] },
-  { title: 'Important', links: ['Product', 'Book a Demo Call', 'Get Started', 'Quick Video', 'Start Managing Free'] },
-  { title: 'Support', links: ['Documentation', 'Create a Ticket', 'Privacy Policy', 'Terms of Service'] },
+  { title: 'Company', links: ['About', 'Blog', 'Career', 'Clients', 'Affiliate Partner', 'FAQs'] },
+  { title: 'Quick Links', links: ['Testimonials', 'Privacy Policy', 'Terms of Service', 'Refund Policy'] },
 ];
+
+const offices = [
+  { name: 'USA Office', lines: ['651 N Broad St # 201,', 'Middletown, DE 19709, USA'] },
+  { name: 'Bangladesh Office', lines: ['Level 1, House 18, Road 17,', 'Nikunja 2, Dhaka 1229'] },
+];
+
+const contacts = [
+  { label: 'contact@subscriptionpro.co', href: 'mailto:contact@subscriptionpro.co', icon: 'M4 6h16v12H4zM4 7l8 6 8-6' },
+  { label: '+8801934387973', href: 'tel:+8801934387973', icon: 'M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3z' },
+];
+
+const heading = 'text-[13px] font-semibold tracking-[0.14em] text-white/50 uppercase';
 
 const I = (d: ReactNode) => (
   <svg viewBox="0 0 24 24" className="size-[18px]" fill="currentColor" aria-hidden>
@@ -44,7 +54,7 @@ export function Footer3() {
     <Band as="footer" outer="mt-5 pb-5" className="bg-forest text-white">
       <BandInner className="pt-16 md:pt-20 xl:pt-[100px]">
         {/* brand + socials | newsletter */}
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
           <div data-anim="fade-up">
             <Logo onDark className="w-[200px] md:w-[230px]" />
             <p className="mt-5 max-w-[420px] text-[16px] leading-[1.6] text-white/65">
@@ -97,11 +107,11 @@ export function Footer3() {
 
         <hr data-anim="draw" className="mt-12 border-white/10 md:mt-16" />
 
-        {/* link columns + highlight */}
-        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 md:mt-14 md:grid-cols-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,1.2fr)]">
+        {/* menu, offices, contact + highlight */}
+        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 md:mt-14 lg:grid-cols-[0.8fr_0.9fr_1.4fr_1.4fr] xl:grid-cols-[0.7fr_0.85fr_1.3fr_1.35fr_1.15fr]">
           {columns.map((c) => (
             <nav key={c.title} aria-label={c.title}>
-              <h3 className="text-[13px] font-semibold tracking-[0.14em] text-white/50 uppercase">{c.title}</h3>
+              <h3 className={heading}>{c.title}</h3>
               <ul className="mt-5 flex flex-col gap-3.5 text-[15.5px] text-white/85">
                 {c.links.map((l) => (
                   <li key={l}>
@@ -114,7 +124,40 @@ export function Footer3() {
               </ul>
             </nav>
           ))}
-          <div className="col-span-2 flex flex-col justify-between gap-5 rounded-[22px] bg-[linear-gradient(135deg,#f07ac4,#c94fa6_55%,#8b5cf6)] p-6 md:col-span-4 lg:col-span-1">
+
+          <div className="col-span-2 md:col-span-1">
+            <h3 className={heading}>Our Offices</h3>
+            <div className="mt-5 flex flex-col gap-6">
+              {offices.map((o) => (
+                <address key={o.name} className="text-[15.5px] leading-[1.6] not-italic text-white/70">
+                  <span className="block font-semibold text-white">{o.name}</span>
+                  {o.lines.map((l) => (
+                    <span key={l} className="block">{l}</span>
+                  ))}
+                </address>
+              ))}
+            </div>
+          </div>
+
+          <div className="col-span-2 md:col-span-1">
+            <h3 className={heading}>Contact Info</h3>
+            <ul className="mt-5 flex flex-col gap-3.5 text-[15.5px] text-white/85">
+              {contacts.map((c) => (
+                <li key={c.href}>
+                  <a href={c.href} className="inline-flex items-center gap-3 transition-colors hover:text-white">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/[0.08] ring-1 ring-white/10">
+                      <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d={c.icon} />
+                      </svg>
+                    </span>
+                    {c.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-span-2 flex flex-col justify-between gap-5 rounded-[22px] bg-[linear-gradient(135deg,#f07ac4,#c94fa6_55%,#8b5cf6)] p-6 lg:col-span-4 xl:col-span-1">
             <p className="font-display text-[34px] leading-none font-bold">200,000+</p>
             <p className="text-[15px] leading-[1.5] text-white/90">users registered since January 2026 — and saving on every renewal.</p>
             <a href="#get-started" className="btn-roll self-start rounded-full bg-white px-5 py-2.5 text-[14px] font-semibold text-[#14141f]">
@@ -123,17 +166,8 @@ export function Footer3() {
           </div>
         </div>
 
-        {/* legal bar */}
-        <div className="mt-14 flex flex-col gap-4 border-t border-white/10 py-7 text-[14px] text-white/55 md:mt-16 md:flex-row md:items-center md:justify-between">
-          <p>© 2026 SubscriptionPro. All rights reserved.</p>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
-            {['Privacy Policy', 'Terms of Service', 'Refund Policy', 'Cookies'].map((l) => (
-              <li key={l}>
-                <a href="#" className="transition-colors hover:text-white">{l}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* copyright */}
+        <p className="mt-14 border-t border-white/10 py-7 text-[14px] text-white/55 md:mt-16">© 2026 SubscriptionPro. All rights reserved.</p>
       </BandInner>
 
       {/* calm gradient wordmark, clipped at the bottom edge */}

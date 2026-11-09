@@ -3,7 +3,6 @@ import { initAnimations } from './animations';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Intro } from './components/Intro';
-import { IntroKicker } from './components/IntroKicker';
 import { Divider } from './components/Container';
 import { Stats } from './components/Stats';
 import { Partners } from './components/Partners';
@@ -34,7 +33,7 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
       <Header page={page} overlay={page === 'home-2'} />
       <main>
         <Hero withHeader={page === 'home-2'} />
-        {page === 'home-2' ? <IntroKicker /> : <Intro />}
+        {page === 'home-2' ? <ClientLogos className="py-12 md:py-16 xl:pt-[88px] xl:pb-[96px]" /> : <Intro />}
         <Divider />
         <Stats />
         <Divider />
@@ -44,7 +43,6 @@ export default function App({ page = 'home-1' }: { page?: PageId }) {
         {page === 'home-2' ? <GlanceScroll /> : <Glance />}
         <Divider />
         <Trusted centered={page === 'home-2'} pinkCta={page === 'home-2'} />
-        {page === 'home-2' && <ClientLogos className="-mt-4 pb-16 md:-mt-8 md:pb-24 xl:-mt-[72px] xl:pb-[130px]" />}
         <Divider />
         {page === 'home-2' ? <Calculator3 plain /> : <Calculator />}
         <Divider />

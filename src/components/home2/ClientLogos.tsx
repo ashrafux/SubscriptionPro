@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-/* Home Two: animated client-logo strip after the Trusted section.
+/* Home Two: animated client-logo strip directly under the hero.
    Placeholder wordmarks for fictional companies — swap in real client logos (with permission) before launch. */
 
 const S = (d: ReactNode) => (
@@ -48,7 +48,7 @@ function Row({ reverse = false }: { reverse?: boolean }) {
   );
 }
 
-/** `className` sets the section spacing (Home Two places it straight after Trusted, which already has a deep bottom gap). */
+/** `className` sets the section spacing (Home Two passes its own padding). */
 export function ClientLogos({ className = 'pt-16 md:pt-24 xl:pt-[120px]' }: { className?: string }) {
   return (
     <section aria-label="Our clients" className={className}>
