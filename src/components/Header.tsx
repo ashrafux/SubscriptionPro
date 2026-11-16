@@ -99,7 +99,7 @@ export function Header({ page = 'home-1', overlay = false, sticky = false }: { p
       ref={headerRef}
       className={
         overlay
-          ? 'absolute inset-x-0 top-0 z-40 px-5 pt-5'
+          ? 'absolute inset-x-0 top-0 z-40'
           : sticky
             ? `sticky top-0 z-50 transition-[background-color,box-shadow] duration-300 ${scrolled ? 'bg-white/85 shadow-[0_1px_0_rgba(20,20,43,0.06),0_12px_30px_-14px_rgba(20,20,43,0.18)] backdrop-blur-xl' : 'bg-white'}`
             : 'relative z-40 bg-white'

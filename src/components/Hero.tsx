@@ -20,8 +20,12 @@ const roundImg = (src: string, alt: string, w: number, h = w) => (
 /** `withHeader`: Home Two — the card starts 20px from the top and the header floats inside it, so the copy starts lower. */
 export function Hero({ withHeader = false }: { withHeader?: boolean }) {
   return (
-    <section data-hero className={`px-5 ${withHeader ? 'pt-5' : ''}`}>
-      <div data-hero-card className="relative mx-auto max-w-[1880px] overflow-hidden rounded-[20px]">
+    <section data-hero className={withHeader ? '' : 'px-5'}>
+      <div
+        data-hero-card
+        data-flush={withHeader || undefined}
+        className={`relative overflow-hidden ${withHeader ? '' : 'mx-auto max-w-[1880px] rounded-[20px]'}`}
+      >
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <img src="/assets/hero/hero-bg.jpg" alt="" className="absolute inset-0 size-full object-cover" />
           {/* Home Two: soft white haze in the top-left corner so the logo reads clearly over the pink */}

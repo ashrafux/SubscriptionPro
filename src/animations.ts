@@ -57,9 +57,10 @@ export function initAnimations(root: HTMLElement) {
       // Card opens from a smaller rounded window. Edges are driven from one progress value: browsers shorten
       // inset() strings when left == right, which would make a direct clipPath tween interpolate lopsided.
       const reveal = { p: 0 };
+      const endRadius = card?.hasAttribute('data-flush') ? 0 : 20;
       const paintClip = () => {
         const k = 1 - reveal.p;
-        gsap.set(card, { clipPath: `inset(${6 * k}% ${7 * k}% ${12 * k}% ${7 * k}% round ${20 + 24 * k}px)` });
+        gsap.set(card, { clipPath: `inset(${6 * k}% ${7 * k}% ${12 * k}% ${7 * k}% round ${endRadius + 24 * k}px)` });
       };
       paintClip();
       gsap.set(bg, { scale: 1.14 });

@@ -16,7 +16,7 @@ export function Footer() {
   const [sent, setSent] = useState(false);
 
   return (
-    <Band as="footer" outer="mt-5 pb-5" className="bg-forest text-white">
+    <Band as="footer" outer="mt-5 pb-5" className="bg-forest text-white md:px-10">
       <BandInner className="pt-16 md:pt-20 xl:pt-[125px]">
         <div data-anim="stagger" className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 md:gap-x-8">
           {columns.map((c) => (

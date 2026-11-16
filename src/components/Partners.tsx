@@ -64,7 +64,7 @@ function ProductCard({ name, logo, save }: Product) {
             </a>
             {/* tertiary: text + arrow, same label roll; colour follows the card's dark hover state */}
             <a
-              href={`#product-${name.toLowerCase()}`}
+              href={`/product-details.html?product=${name.toLowerCase()}`}
               className="btn-roll flex items-center gap-2 text-[17.06px] leading-[1.35] font-bold tracking-[0.5909px] text-black transition-colors duration-500 group-hover:text-white group-focus-within:text-white"
             >
               <RollText>View details</RollText>
