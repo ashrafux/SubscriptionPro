@@ -28,13 +28,10 @@ const P = ({ children, className = '' }: { children: ReactNode; className?: stri
   <p className={`text-[16px] leading-[1.5] text-body md:text-[18px] ${className}`}>{children}</p>
 );
 
-/**
- * Photo slot. The two article photos (Figma 6812:1819 and 6812:1820) could not be downloaded — the Figma MCP limit
- * was reached — so `src` is optional; drop the exported files into /public/assets/product/ and pass them in.
- */
+/** Article photo slot (Figma 6812:1819 / 6812:1820, 732×414); shows a labelled placeholder when `src` is missing. */
 function Photo({ src, alt, note }: { src?: string; alt: string; note: string }) {
   return (
-    <div className="relative mt-10 aspect-[732/414] w-full max-w-[732px] overflow-hidden rounded-[20px] bg-[linear-gradient(135deg,#e5ecfb,#f4e6f0)]">
+    <div className={`relative mt-10 aspect-[732/414] w-full max-w-[732px] overflow-hidden rounded-[20px] ${src ? '' : 'bg-[linear-gradient(135deg,#e5ecfb,#f4e6f0)]'}`}>
       {src ? (
         <img src={src} alt={alt} className="absolute inset-0 size-full object-cover" />
       ) : (
@@ -62,7 +59,7 @@ export function Article() {
           collaboration, and remote communication tools. It helps startups, enterprises, educational institutions, agencies, and distributed teams
           communicate and collaborate more efficiently.
         </P>
-        <Photo alt="Laptop showing the Zoom logo" note="Figma image 6812:1819" />
+        <Photo src={`${A}/overview.webp`} alt="Laptop showing the Zoom logo" note="Figma image 6812:1819" />
       </Block>
 
       <Block title="Why Buy from SubscriptionPro">
@@ -105,7 +102,7 @@ export function Article() {
 
       <Block title="Core Zoom Features">
         <P className="mt-5">Let’s take a look at the core features of Zoom that can help businesses improve communication and collaboration workflows.</P>
-        <Photo alt="Team video call on a laptop" note="Figma image 6812:1820" />
+        <Photo src={`${A}/core-features.webp`} alt="Team video call on a laptop" note="Figma image 6812:1820" />
         <dl className="mt-10 flex flex-col gap-[30px]">
           {features.map(([t, d]) => (
             <div key={t}>
